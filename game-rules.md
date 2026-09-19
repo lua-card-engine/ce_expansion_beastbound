@@ -9,7 +9,7 @@ Every card is one of four supertypes:
 - **Beast** — a monster you battle with. Has a Stage (1, 2, or 3), an HP total, a Type, up to 2 attacks, a Weakness, a Resistance, and a Retreat Cost.
 - **Supporter** — a named character card with a one-time effect. Playing one uses your turn's single Supporter play (see §5).
 - **Item** — an equipment or consumable card with a one-time or persistent effect. Unlike Supporters, you may play any number of Items per turn.
-- **Energy** — a Basic Energy card provides 1 Energy of its printed type when attached to a Beast. There is one Basic Energy per type (Electric, Fighting, Fire, Psychic, Water, Nature).
+- **Energy** — a Energy card provides 1 Energy of its printed type when attached to a Beast. There is one Energy per type (Electric, Fighting, Fire, Psychic, Water, Nature).
 
 ## 2. The 6 types & the type chart
 
@@ -48,7 +48,7 @@ Attack costs are paid only in the attacking Beast's own type — there is no col
 ## 3. Deck construction
 
 - A deck has exactly **60 cards**.
-- No more than **4 copies** of any single named card, except Basic Energy (unlimited copies).
+- No more than **4 copies** of any single named card, except Energy (unlimited copies).
 - A legal deck must contain at least one Stage-1 Beast (you need one to start the game).
 
 ## 4. Setup
@@ -124,4 +124,4 @@ The existing booster (`ce_expansion_beastbound_first_booster.lua`) defines an 11
 | **Common** | All 17 Stage-1 Beasts, all 3 Supporters, 2 Items (Minor Potion, Noxious Draught) |
 | **Uncommon** | All 14 Stage-2 (mid-evolution) Beasts, 3 Items (Tactic Scroll, Boots of Flight, Lion Gauntlets) |
 | **Rare** | All 17 final-evolution Beasts, 2 Items (Runic Sword, Tome of Fate) |
-| **Energy** (own slot type, always Common) | All 6 Basic Energy |
+| **Energy** (own slot type, always Common) | All 6 Energy |

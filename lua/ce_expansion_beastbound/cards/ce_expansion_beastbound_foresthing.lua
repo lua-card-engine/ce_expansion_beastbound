@@ -28,7 +28,7 @@ CARD.Attributes = {
 			Name = "Ancient Roots",
 			Cost = 3,
 			Damage = 90,
-			Effect = "Search your deck for a Basic Energy card, attach it to Foresthing, then shuffle your deck.",
+			Effect = "Search your deck for a Energy card, attach it to Foresthing, then shuffle your deck.",
 		},
 	},
 }

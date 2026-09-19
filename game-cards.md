@@ -159,7 +159,7 @@ Attack costs are a number of Energy **of the Beast's own type** (this set has no
 |---|---|---|---|---|---|---|
 | 046 | Vineling | Basic | — | 65 | 1 | **Vine Flick** (1, 20 dmg)<br>**Leech** (2, 20 dmg) — Heal 10 damage from Vineling. |
 | 047 | Lianalker | Stage 1 | Vineling | 110 | 1 | **Root Snare** (1, 30 dmg) — During your opponent's next turn, the Defending Beast's Retreat Cost is 2 more.<br>**Bramble Slash** (2, 50 dmg) |
-| 048 | Foresthing | Stage 2 | Lianalker | 160 | 2 | **Overgrowth** (2, 50 dmg) — Heal 20 damage from Foresthing.<br>**Ancient Roots** (3, 90 dmg) — Search your deck for a Basic Energy card, attach it to Foresthing, then shuffle your deck. |
+| 048 | Foresthing | Stage 2 | Lianalker | 160 | 2 | **Overgrowth** (2, 50 dmg) — Heal 20 damage from Foresthing.<br>**Ancient Roots** (3, 90 dmg) — Search your deck for a Energy card, attach it to Foresthing, then shuffle your deck. |
 
 ---
 
@@ -183,7 +183,7 @@ Attack costs are a number of Energy **of the Beast's own type** (this set has no
 | 057 | Runic Sword | `design/items/sword.png` | Rare (Equip) | Attach to 1 of your Beasts. That Beast's attacks do 30 more damage. Discard this card if that Beast is Knocked Out. |
 | 058 | Tome of Fate | `design/items/tome.png` | Rare | Look at the top 3 cards of your deck. Put 1 into your hand and the rest on the bottom of your deck in any order. |
 
-## Basic Energy *(all Common)*
+## Energy *(all Common)*
 
 | # | Name | Art |
 |---|---|---|
@@ -194,4 +194,4 @@ Attack costs are a number of Energy **of the Beast's own type** (this set has no
 | 063 | Water Energy | `design/water.png` |
 | 064 | Nature Energy | `design/nature.png` |
 
-Each Basic Energy card's only rule text is "Attach to 1 of your Beasts. Provides 1 [Type] Energy."
+Each Energy card's only rule text is "Attach to 1 of your Beasts. Provides 1 [Type] Energy."

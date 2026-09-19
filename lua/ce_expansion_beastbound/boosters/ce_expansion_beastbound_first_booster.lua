@@ -110,7 +110,7 @@ BOOSTER.SlotConfiguration = {
 		-- },
 	},
 
-	-- Slots 10-11: Basic Energy
+	-- Slots 10-11: Energy
 	{
 		requiredAttributes = {
 			Supertype = "Energy",
