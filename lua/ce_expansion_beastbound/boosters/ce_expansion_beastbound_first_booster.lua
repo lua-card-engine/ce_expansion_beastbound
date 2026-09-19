@@ -26,7 +26,7 @@ BOOSTER.CardPool = {
 -- Define the slot configuration for the booster pack
 -- Each slot can have:
 --   - attributeWeights: Roll for specific attribute values (e.g., Rarity, Type)
---   - requiredAttributes: Filter cards that MUST have certain attributes (e.g., Supertype = "Trainer")
+--   - requiredAttributes: Filter cards that MUST have certain attributes (e.g., Supertype = "Supporter")
 --   - modifiers: Apply modifiers to the card (e.g., condition, foil)
 --
 -- Legacy support: You can still use rarityWeights instead of attributeWeights.Rarity
@@ -69,7 +69,7 @@ BOOSTER.SlotConfiguration = {
 			},
 		},
 		requiredAttributes = {
-			Supertype = "Trainer",
+			Supertype = "Supporter",
 		},
 	},
 

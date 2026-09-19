@@ -163,13 +163,13 @@ Attack costs are a number of Energy **of the Beast's own type** (this set has no
 
 ---
 
-## Trainers *(Supporter — 1 per turn, all Common)*
+## Supporters
 
 | # | Name | Art | Effect |
 |---|---|---|---|
-| 049 | Jack, the Stonecaller | `design/trainers/jack.png` | Search your deck for a Fighting Energy card and attach it to 1 of your Beasts. Shuffle your deck afterward. |
-| 050 | Jane, the Waverider | `design/trainers/jane.png` | Heal 30 damage from 1 of your Beasts. |
-| 051 | Shane, the Overclocker | `design/trainers/shane.png` | Draw 2 cards. |
+| 049 | Jack, the Stonecaller | `design/supporters/jack.png` | Search your deck for a Fighting Energy card and attach it to 1 of your Beasts. Shuffle your deck afterward. |
+| 050 | Jane, the Waverider | `design/supporters/jane.png` | Heal 30 damage from 1 of your Beasts. |
+| 051 | Shane, the Overclocker | `design/supporters/shane.png` | Draw 2 cards. |
 
 ## Items *(any number per turn)*
 

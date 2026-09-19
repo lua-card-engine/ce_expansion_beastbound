@@ -7,8 +7,8 @@ A 2-player collectible card game. This document defines the rules engine; see [g
 Every card is one of four supertypes:
 
 - **Beast** — a monster you battle with. Has a Stage (1, 2, or 3), an HP total, a Type, up to 2 attacks, a Weakness, a Resistance, and a Retreat Cost.
-- **Trainer** — a named character card with a one-time effect. Playing one uses your turn's single Supporter play (see §4).
-- **Item** — an equipment or consumable card with a one-time or persistent effect. Unlike Trainers, you may play any number of Items per turn.
+- **Supporter** — a named character card with a one-time effect. Playing one uses your turn's single Supporter play (see §5).
+- **Item** — an equipment or consumable card with a one-time or persistent effect. Unlike Supporters, you may play any number of Items per turn.
 - **Energy** — a Basic Energy card provides 1 Energy of its printed type when attached to a Beast. There is one Basic Energy per type (Electric, Fighting, Fire, Psychic, Water, Nature).
 
 ## 2. The 6 types & the type chart
@@ -66,7 +66,7 @@ Each turn, in order:
 2. **Action phase** — in any order, any number of times unless noted:
    - Attach **1 Energy card** from your hand to 1 of your Beasts (once per turn).
    - Play any number of **Item** cards.
-   - Play **1 Trainer (Supporter)** card (once per turn — the 3 named characters, Jack/Jane/Shane, are Supporters).
+   - Play **1 Supporter** card (once per turn — the 3 named characters, Jack/Jane/Shane, are Supporters).
    - **Evolve** a Beast by placing the next-stage card from your hand on top of it (a Beast can't evolve the turn it was played, and can't evolve more than once per turn).
    - **Retreat**: once per turn, discard Energy from your Active Beast equal to its Retreat Cost to swap it with a Benched Beast.
 3. **Attack** — declare 1 attack your Active Beast has enough Energy attached to pay for, resolve its effect and damage, then your turn ends. Attacking is optional; you may end your turn without attacking.
@@ -99,7 +99,7 @@ You win immediately if any of the following happens to your opponent:
 Every Beast card prints, top to bottom:
 
 - **Name**, **HP**, and the **Type icon** in the header.
-- The supertype/evolution banner (for beasts "Basic", "Stage 1", or "Stage 2" evolution label), for items "Item", for trainers "Supporter", and for energy cards "Energy".
+- The supertype/evolution banner (for beasts "Basic", "Stage 1", or "Stage 2" evolution label), for items "Item", for supporters "Supporter", and for energy cards "Energy".
 - The **illustration**.
 - An **info box** listing its attacks — this design standardizes on **exactly 2 attacks per Beast** (the physical layout has room for a 3rd; that slot is reserved for future promo/special cards, not used in the base set). Each attack shows its Energy cost as colored pips, its name, up to 2 lines of rules text, and its damage number.
 - A footer row with **Weakness**, **Resistance**, and **Retreat Cost** (each as a type icon, or a number of pips for Retreat).
@@ -117,11 +117,11 @@ Retreat Cost gets a ±1 flavor adjustment for especially bulky lines (rock/turtl
 
 ## 10. Rarity & the booster pack
 
-The existing booster (`ce_expansion_beastbound_first_booster.lua`) defines an 11-card pack: 4 Common slots, 1 Common-Trainer slot, 3 Uncommon slots, 1 Rare slot, and 2 Common-Energy slots. Rarity in this set is assigned so every slot always has legal cards to draw, without any code changes:
+The existing booster (`ce_expansion_beastbound_first_booster.lua`) defines an 11-card pack: 4 Common slots, 1 Common-Supporter slot, 3 Uncommon slots, 1 Rare slot, and 2 Common-Energy slots. Rarity in this set is assigned so every slot always has legal cards to draw, without any code changes:
 
 | Rarity | Cards |
 |---|---|
-| **Common** | All 17 Stage-1 Beasts, all 3 Trainers, 2 Items (Minor Potion, Noxious Draught) |
+| **Common** | All 17 Stage-1 Beasts, all 3 Supporters, 2 Items (Minor Potion, Noxious Draught) |
 | **Uncommon** | All 14 Stage-2 (mid-evolution) Beasts, 3 Items (Tactic Scroll, Boots of Flight, Lion Gauntlets) |
 | **Rare** | All 17 final-evolution Beasts, 2 Items (Runic Sword, Tome of Fate) |
 | **Energy** (own slot type, always Common) | All 6 Basic Energy |

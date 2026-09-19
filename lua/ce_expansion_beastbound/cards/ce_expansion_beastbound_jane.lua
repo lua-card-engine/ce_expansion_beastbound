@@ -8,7 +8,6 @@ CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON
 
 CARD.Attributes = {
 	Rarity = "Common",
-	Supertype = "Trainer",
-	Subtype = "Supporter",
+	Supertype = "Supporter",
 	CardNumber = 50,
 }

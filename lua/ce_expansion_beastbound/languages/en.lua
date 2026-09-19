@@ -211,7 +211,7 @@ return {
 	["ce_expansion_beastbound_foresthing_description"] =
 	"Foresthing, the nature-type beast, is an ancient guardian of the forest, its mossy body blooming with flowers and thorny roots.",
 
-	-- Trainers
+	-- Supporters
 	["ce_expansion_beastbound_jack"] = "Jack, the Stonecaller",
 	["ce_expansion_beastbound_jack_description"] =
 	"Search your deck for a Fighting Energy card and attach it to 1 of your Beasts. Shuffle your deck afterward.",
