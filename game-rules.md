@@ -99,7 +99,7 @@ You win immediately if any of the following happens to your opponent:
 Every Beast card prints, top to bottom:
 
 - **Name**, **HP**, and the **Type icon** in the header.
-- A **"BEAST"** supertype banner (plus Stage — "Basic", "Stage 1", or "Stage 2" evolution label, and "Evolves from `<name>`" where applicable).
+- The supertype/evolution banner (for beasts "Basic", "Stage 1", or "Stage 2" evolution label), for items "Item", for trainers "Supporter", and for energy cards "Energy".
 - The **illustration**.
 - An **info box** listing its attacks — this design standardizes on **exactly 2 attacks per Beast** (the physical layout has room for a 3rd; that slot is reserved for future promo/special cards, not used in the base set). Each attack shows its Energy cost as colored pips, its name, up to 2 lines of rules text, and its damage number.
 - A footer row with **Weakness**, **Resistance**, and **Retreat Cost** (each as a type icon, or a number of pips for Retreat).
