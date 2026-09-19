@@ -1,13 +1,13 @@
 {
     "name": "ce_expansion_tools",
     "version": "0.1.0",
-    "description": "Tools for {{ EXPANSION_ID }} expansion set",
+    "description": "Tools for ce_expansion_beastbound expansion set",
     "main": "index.js",
     "type": "module",
     "scripts": {
         "setup": "node setup.js",
         "convert": "node convert.js",
-        "concat-cards": "node concat_cards.js ../lua/{{ EXPANSION_ID }}/cards",
+        "concat-cards": "node concat_cards.js ../lua/ce_expansion_beastbound/cards",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {

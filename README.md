@@ -1,49 +1,9 @@
-<!-- SETUP START -->
-> [!WARNING]
-> **This project is a template and needs to be set up before use.**
->
-> Follow these steps to configure your expansion:
->
-> 1. **Clone this repository** to your local machine:
->
->    ```bash
->    git clone <repository-url>
->    cd <repository-name>
->    ```
->
-> 2. **Install Node.js** if you haven't already:
->    - Download and install from [nodejs.org](https://nodejs.org/)
->    - Verify installation by running: `node --version`
->
-> 3. **Open a terminal** in the project directory and navigate to the `tools/` folder:
->
->    ```bash
->    cd tools
->    ```
->
-> 4. **Install dependencies**:
->
->    ```bash
->    npm install
->    ```
->
-> 5. **Run the setup script**:
->
->    ```bash
->    npm run setup
->    ```
->
->    You'll be prompted to enter:
->    - Your expansion name (e.g., "My Cool Expansion")
->    - An optional remote download URL
->
->    The script will automatically replace all template placeholders (like `{{ EXPANSION_ID }}`) throughout the project.
->
-> 6. **Start developing!** Once setup is complete, this warning will be automatically removed from the README.
->
-<!-- SETUP END --># 🃏 CardEngine Expansion Set: {{ EXPANSION_NAME }}
+# 🃏 CardEngine Expansion Set: Beastbound
 
-This repository contains the {{ EXPANSION_NAME }} Base Expansion Set for the yet to be released CardEngine, a comprehensive collectible card framework for Garry's Mod. This expansion set introduces a variety of cards for players to collect and trade.
+This repository contains the Beastbound Base Expansion Set for CardEngine, a comprehensive collectible card framework for Garry's Mod. This expansion set introduces a variety of cards for players to collect and trade.
+
+> [!IMPORTANT]
+> **The card assets in the `design/`-directory are AI-slop.** While they are free to use in your own projects, we encourage you to have a professional artist create the card designs for your own expansion set if you have the means.
 
 ## 🚀 Usage
 
@@ -51,27 +11,27 @@ To use this expansion set in your Garry's Mod server, follow these steps:
 
 1. Ensure CardEngine is installed on your Garry's Mod server.
 
-2. Download or clone this repository to your local machine into a `{{ EXPANSION_ID }}` folder.
+2. Download or clone this repository to your local machine into a `ce_expansion_beastbound` folder.
 
-3. Copy that entire `{{ EXPANSION_ID }}` folder into the `addons/` directory of your Garry's Mod installation.
+3. Copy that entire `ce_expansion_beastbound` folder into the `addons/` directory of your Garry's Mod installation.
 
 4. After the above steps, the folder structure should look like this:
 
     ```plaintext
     garrysmod/
     └── addons/
-        └── {{ EXPANSION_ID }}/
+        └── ce_expansion_beastbound/
             ├── design/
             │   └── ...
             ├── lua/
             │   ├── autorun/
-            │   │   └── {{ EXPANSION_ID }}.lua
-            │   └── {{ EXPANSION_ID }}/
+            │   │   └── ce_expansion_beastbound.lua
+            │   └── ce_expansion_beastbound/
             │       └── ...
             ├── materials/
             │   └── card_engine/
             │       └── expansions/
-            │           └── {{ EXPANSION_ID }}/
+            │           └── ce_expansion_beastbound/
             ├── tools/
             │   └── ...
             └── ...
@@ -81,7 +41,7 @@ To use this expansion set in your Garry's Mod server, follow these steps:
 
 The files in this expansion set are distributed through Cloudflare R2. See [the `sync-to-r2` GitHub Action configuration](.github/workflows/sync-to-r2.yml) to understand how the distribution works.
 
-**In short:** Whenever the contents of the `materials/` folder are changed and pushed to the `main` branch, those changes are automatically uploaded to Cloudflare R2 for distribution. In [the `sh_init.lua` configuration file of this expansion set](lua/{{ EXPANSION_ID }}/sh_init.lua), the R2 URL is setup as the remote location where CardEngine should look for the card materials:
+**In short:** Whenever the contents of the `materials/` folder are changed and pushed to the `main` branch, those changes are automatically uploaded to Cloudflare R2 for distribution. In [the `sh_init.lua` configuration file of this expansion set](lua/ce_expansion_beastbound/sh_init.lua), the R2 URL is setup as the remote location where CardEngine should look for the card materials:
 
 ```lua
 CardEngine.ExpansionSet.Register({
@@ -103,7 +63,7 @@ To enable the automatic synchronization to Cloudflare R2, you need to set up the
 
 Additionally, add this variable to the repository, to specify the expansion subfolder in the R2 bucket:
 
-- `EXPANSION_FOLDER`: Set this to `{{ EXPANSION_ID }}` for this expansion set.
+- `EXPANSION_FOLDER`: Set this to `ce_expansion_beastbound` for this expansion set.
 <!-- DISTRIBUTION END -->
 
 ## 🛠️ Tools
@@ -128,7 +88,7 @@ To convert your `.png` card designs to `.vtf`, follow these steps:
     npm install
     ```
 
-4. To convert all `.png` files in the `design/` folder to `.vtf` format in the `materials/card_engine/expansions/{{ EXPANSION_ID }}` folder, run the following command:
+4. To convert all `.png` files in the `design/` folder to `.vtf` format in the `materials/card_engine/expansions/ce_expansion_beastbound` folder, run the following command:
 
     ```bash
     npm run convert

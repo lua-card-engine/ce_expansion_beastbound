@@ -6,7 +6,7 @@
 //   node concat_cards.js <cardsDirectory> [outputFileName]
 //
 // Example:
-//   node concat_cards.js ../lua/{{ EXPANSION_ID }}/cards
+//   node concat_cards.js ../lua/ce_expansion_beastbound/cards
 //
 // Each card file is expected to start with `local CARD = CARD` (the engine
 // normally injects a global CARD table before including the file). In the
@@ -87,7 +87,7 @@ function main() {
 
   if (!cardsDirectoryArg) {
     console.error('Usage: node concat_cards.js <cardsDirectory> [outputFileName]');
-    console.error('Example: node concat_cards.js ../lua/{{ EXPANSION_ID }}/cards');
+    console.error('Example: node concat_cards.js ../lua/ce_expansion_beastbound/cards');
     process.exit(1);
   }
 
