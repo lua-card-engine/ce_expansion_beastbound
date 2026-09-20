@@ -63,6 +63,24 @@ return {
 	["ce_expansion_beastbound_prompt_corrupt_luxpaws"] = "Choose a Luxpaws to corrupt into Umbramaw.",
 
 	--[[
+		Zones, and what is said about a Beast when it is inspected
+	--]]
+
+	["ce_expansion_beastbound_zone_deck"] = "Deck",
+	["ce_expansion_beastbound_zone_hand"] = "Hand",
+	["ce_expansion_beastbound_zone_discard"] = "Discard pile",
+	["ce_expansion_beastbound_zone_prizes"] = "Prize cards",
+	["ce_expansion_beastbound_zone_active"] = "Active spot",
+	["ce_expansion_beastbound_zone_bench"] = "Bench",
+
+	["ce_expansion_beastbound_inspect_hp"] = "Health",
+	["ce_expansion_beastbound_inspect_hp_value"] = "{remaining} of {max} left",
+	["ce_expansion_beastbound_inspect_conditions"] = "Special Conditions",
+	["ce_expansion_beastbound_inspect_retreat"] = "Retreat Cost right now",
+	["ce_expansion_beastbound_inspect_retreat_value"] = "{cost} Energy",
+	["ce_expansion_beastbound_inspect_retreat_changed"] = "{cost} Energy (printed: {printed})",
+
+	--[[
 		Lasting effects
 	--]]
 

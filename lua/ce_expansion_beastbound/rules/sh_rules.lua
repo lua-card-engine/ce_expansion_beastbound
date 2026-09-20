@@ -468,29 +468,35 @@ function Beastbound.RegisterGameRules()
 
 		Zones = {
 			Deck = {
+				Label = "ce_expansion_beastbound_zone_deck",
 				PerPlayer = true,
 				Ordered = true,
 				Visibility = CardEngine.VISIBILITY_NONE,
 			},
 			Hand = {
+				Label = "ce_expansion_beastbound_zone_hand",
 				PerPlayer = true,
 				Visibility = CardEngine.VISIBILITY_OWNER,
 			},
 			Discard = {
+				Label = "ce_expansion_beastbound_zone_discard",
 				PerPlayer = true,
 				Ordered = true,
 				Visibility = CardEngine.VISIBILITY_ALL,
 			},
 			Prizes = {
+				Label = "ce_expansion_beastbound_zone_prizes",
 				PerPlayer = true,
 				Visibility = CardEngine.VISIBILITY_NONE,
 			},
 			Active = {
+				Label = "ce_expansion_beastbound_zone_active",
 				PerPlayer = true,
 				Visibility = CardEngine.VISIBILITY_ALL,
 				Slots = 1,
 			},
 			Bench = {
+				Label = "ce_expansion_beastbound_zone_bench",
 				PerPlayer = true,
 				Visibility = CardEngine.VISIBILITY_ALL,
 				Slots = 5,

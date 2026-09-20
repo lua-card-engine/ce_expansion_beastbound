@@ -129,6 +129,75 @@ local function nameOf(match, instanceOrID)
 end
 
 --[[
+	Inspecting
+--]]
+
+--- What is worth saying about a Beast in play that its card does not already say: how hurt it is,
+--- what has been done to it, and what it would cost to move it right now. The card itself, at full
+--- size, already carries its attacks and its text.
+--- @param match CardEngine.Match
+--- @param instance CardEngine.MatchCardInstance
+--- @return table[]
+local function inspectBeast(match, instance)
+	local rows = {}
+
+	if (instance.zone ~= "Active" and instance.zone ~= "Bench") then
+		return rows
+	end
+
+	local card = match:GetInstanceCard(instance)
+
+	if (not card or card:GetAttribute("Supertype") ~= "Beast") then
+		return rows
+	end
+
+	local damage = Beastbound.GetDamage(match, instance)
+
+	table.insert(rows, {
+		label = CardEngine.T("ce_expansion_beastbound_inspect_hp"),
+		color = damage > 0 and COLOR_DAMAGE or nil,
+
+		value = CardEngine.T("ce_expansion_beastbound_inspect_hp_value", {
+			remaining = Beastbound.GetRemainingHP(match, instance),
+			max = Beastbound.GetMaxHP(match, instance),
+		}),
+	})
+
+	local conditions = {}
+
+	for _, condition in ipairs(Beastbound.GetConditions(match, instance)) do
+		table.insert(conditions, CardEngine.T(Beastbound.CONDITIONS[condition].Label))
+	end
+
+	if (#conditions > 0) then
+		table.insert(rows, {
+			label = CardEngine.T("ce_expansion_beastbound_inspect_conditions"),
+			value = table.concat(conditions, ", "),
+			color = COLOR_CONDITION,
+		})
+	end
+
+	-- What it costs now can differ from what is printed, once something in force changes it, and
+	-- that is exactly the kind of thing a player cannot see on the card
+	local cost = Beastbound.GetRetreatCost(match, instance)
+	local printed = match:GetInstanceAttribute(instance, "RetreatCost", 0)
+
+	table.insert(rows, {
+		label = CardEngine.T("ce_expansion_beastbound_inspect_retreat"),
+		color = cost ~= printed and COLOR_EFFECT or nil,
+
+		value = CardEngine.T(cost ~= printed
+			and "ce_expansion_beastbound_inspect_retreat_changed"
+			or "ce_expansion_beastbound_inspect_retreat_value", {
+			cost = cost,
+			printed = printed,
+		}),
+	})
+
+	return rows
+end
+
+--[[
 	Registration
 --]]
 
@@ -217,6 +286,9 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 			end,
 		},
 	},
+
+	--- What a Beast says about itself when a player inspects it
+	Inspect = inspectBeast,
 
 	--- Beastbound's own lines in the match log, on top of the ones Card Engine writes
 	Log = {
