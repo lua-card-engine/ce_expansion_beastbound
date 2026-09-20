@@ -27,6 +27,38 @@ hook.Add(
 					IsArray = false,
 				},
 			},
+
+			-- The rules decks built from this set must follow (see game-rules.md, "Deck construction").
+			-- Card Engine uses these in the Decks tab, and to validate decks on the server.
+			DeckRules = {
+				MinCards = 60,
+				MaxCards = 60,
+
+				-- No more than 4 copies of any single named card...
+				MaxCopies = 4,
+
+				-- ...except for these
+				CopyLimits = {
+					{
+						Name = "ce_expansion_beastbound_deck_rule_energy_unlimited",
+						Attributes = { Supertype = "Energy" },
+						MaxCopies = false, -- Unlimited
+					},
+					{
+						Name = "ce_expansion_beastbound_deck_rule_legendary_limit",
+						Attributes = { Rarity = "Legendary" },
+						MaxCopies = 1,
+					},
+				},
+
+				Requirements = {
+					{
+						Name = "ce_expansion_beastbound_deck_rule_needs_basic_beast",
+						Attributes = { Supertype = "Beast", Stage = "Basic" },
+						MinCards = 1,
+					},
+				},
+			},
 		})
 
 		--------------------------------------------------------------------------------------

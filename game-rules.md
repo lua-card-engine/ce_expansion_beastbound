@@ -49,12 +49,14 @@ Attack costs are paid only in the attacking Beast's own type — there is no col
 
 - A deck has exactly **60 cards**.
 - No more than **4 copies** of any single named card, except Energy (unlimited copies). Legendary cards (see §10) are limited to **1 copy per card name**, so a deck may hold one Luxpaws, one Umbramaw and one Legendary Corrupter together.
-- A legal deck must contain at least one Stage-1 Beast (you need one to start the game).
+- A legal deck must contain at least one Basic Beast (you need one to start the game).
+
+These rules are also declared in machine-readable form as `DeckRules` in `lua/ce_expansion_beastbound/sh_init.lua`, which is what Card Engine's Decks tab uses. Keep the two in sync.
 
 ## 4. Setup
 
-1. Shuffle your deck and draw a 7-card opening hand. If you have no Stage-1 Beast in hand, you may mulligan (reshuffle and redraw 7; your opponent may draw 1 extra card).
-2. Choose 1 Stage-1 Beast from your hand and place it face-down as your **Active Beast**; place any number of additional Stage-1 Beasts face-down on your **Bench** (max 5 Benched Beasts at a time).
+1. Shuffle your deck and draw a 7-card opening hand. If you have no Basic Beast in hand, you may mulligan (reshuffle and redraw 7; your opponent may draw 1 extra card).
+2. Choose 1 Basic Beast from your hand and place it face-down as your **Active Beast**; place any number of additional Basic Beasts face-down on your **Bench** (max 5 Benched Beasts at a time).
 3. Set the top **6 cards** of your deck aside, face-down, as your **Prize cards**.
 4. Both players reveal their Active Beast and Bench simultaneously, then begin.
 
@@ -109,9 +111,9 @@ Every Beast card prints, top to bottom:
 
 | Stage | HP range | Attack 1 (cheap/utility) | Attack 2 (signature) | Retreat Cost |
 |---|---|---|---|---|
-| Stage 1 (Basic) | 55–70 | 1 Energy, 10–20 dmg, often a coin-flip status effect | 1–2 Energy, 20–30 dmg | 0–1 |
-| Stage 2 (mid-evolution) | 95–120 | 1 Energy, 20–30 dmg | 2 Energy, 50 dmg, often a coin-flip effect or minor conditional | 1–2 |
-| Stage 3 / final evolution | 140–180 | 2 Energy, 40–60 dmg, often a coin-flip status effect | 3 Energy, 90–130 dmg, usually a conditional bonus or self-drawback | 2–3 |
+| Basic | 55–70 | 1 Energy, 10–20 dmg, often a coin-flip status effect | 1–2 Energy, 20–30 dmg | 0–1 |
+| Stage 1 (mid-evolution) | 95–120 | 1 Energy, 20–30 dmg | 2 Energy, 50 dmg, often a coin-flip effect or minor conditional | 1–2 |
+| Stage 2 / final evolution | 140–180 | 2 Energy, 40–60 dmg, often a coin-flip status effect | 3 Energy, 90–130 dmg, usually a conditional bonus or self-drawback | 2–3 |
 
 Retreat Cost gets a ±1 flavor adjustment for especially bulky lines (rock/turtle/kraken-themed: +1) or especially light ones (psychic/ghost/bug-themed: −1, floor 0).
 
@@ -121,8 +123,8 @@ The existing booster (`ce_expansion_beastbound_first_booster.lua`) defines an 11
 
 | Rarity | Cards |
 |---|---|
-| **Common** | All 17 Stage-1 Beasts, all 3 Supporters, 2 Items (Minor Potion, Noxious Draught) |
-| **Uncommon** | All 14 Stage-2 (mid-evolution) Beasts, 3 Items (Tactic Scroll, Boots of Flight, Lion Gauntlets) |
+| **Common** | All 17 Basic Beasts, all 3 Supporters, 2 Items (Minor Potion, Noxious Draught) |
+| **Uncommon** | All 14 Stage 1 (mid-evolution) Beasts, 3 Items (Tactic Scroll, Boots of Flight, Lion Gauntlets) |
 | **Rare** | All 17 final-evolution Beasts, 2 Items (Runic Sword, Tome of Fate) |
 | **Legendary** (hidden rare) | Voltaris, Luxpaws, Umbramaw, Legendary Corrupter |
 | **Energy** (own slot type, always Common) | All 6 Energy |

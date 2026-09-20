@@ -7,6 +7,14 @@ return {
 	["expansion_set_ce_expansion_beastbound"] = "Beastbound",
 
 	--[[
+		Deck Rules
+	--]]
+
+	["ce_expansion_beastbound_deck_rule_energy_unlimited"] = "Energy cards can be included any number of times",
+	["ce_expansion_beastbound_deck_rule_legendary_limit"] = "Legendary cards can be included only once",
+	["ce_expansion_beastbound_deck_rule_needs_basic_beast"] = "At least one Basic Beast",
+
+	--[[
         Boosters
     --]]
 
