@@ -31,3 +31,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Landslide: "Also does 20 damage to 1 of your opponent's Benched Beasts."
+			local target = ctx:ChooseOpponentBench()
+			
+			if (target) then
+				ctx:Damage(target, 20)
+			end
+		end,
+	},
+}

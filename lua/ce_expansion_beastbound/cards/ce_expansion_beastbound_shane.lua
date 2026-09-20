@@ -11,3 +11,10 @@ CARD.Attributes = {
 	Supertype = "Supporter",
 	CardNumber = 51,
 }
+
+CARD.GameRules = {
+	-- "Draw 2 cards."
+	OnPlay = function(ctx)
+		ctx:Draw(2)
+	end,
+}

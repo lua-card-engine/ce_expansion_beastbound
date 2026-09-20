@@ -35,3 +35,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Djinn Ward: "During your opponent's next turn, prevent all effects of attacks done to Genitron by Basic Beasts."
+			ctx:AddEffectUntilOpponentTurnEnds("beastbound_ward_basic_effects", nil, ctx.attacker)
+		end,
+		[2] = function(ctx)
+			-- Wish Unbound: "Discard the top card of your deck."
+			ctx:DiscardTopOfDeck(1)
+		end,
+	},
+}

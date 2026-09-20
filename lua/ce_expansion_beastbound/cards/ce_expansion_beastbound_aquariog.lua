@@ -31,3 +31,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Whirlpool: "The Defending Beast is now Confused."
+			ctx:ApplyCondition(ctx.defender, "Confused")
+		end,
+	},
+}

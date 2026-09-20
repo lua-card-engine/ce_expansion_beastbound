@@ -12,3 +12,21 @@ CARD.Attributes = {
 	Subtype = "Equip",
 	CardNumber = 55,
 }
+
+CARD.GameRules = {
+	-- "Attach to 1 of your Beasts. That Beast's Retreat Cost is 0.
+	-- Discard this card if that Beast is Knocked Out."
+	--
+	-- The engine discards whatever is attached along with its host, and drops an effect when the
+	-- card that put it there leaves play, so the second sentence needs no code of its own.
+	OnPlay = function(ctx)
+		local target = ctx:ChooseOwnBeast()
+
+		if (not target) then
+			return false
+		end
+
+		ctx:AttachEnergy(ctx.source, target)
+		ctx:AddLastingEffect("beastbound_retreat_cost_free", nil, target)
+	end,
+}

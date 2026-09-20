@@ -12,3 +12,16 @@ CARD.Attributes = {
 	Subtype = "Consumable",
 	CardNumber = 52,
 }
+
+CARD.GameRules = {
+	-- "Heal 20 damage from 1 of your Beasts."
+	OnPlay = function(ctx)
+		local target = ctx:ChooseOwnBeast()
+
+		if (not target) then
+			return false
+		end
+
+		ctx:Heal(target, 20)
+	end,
+}

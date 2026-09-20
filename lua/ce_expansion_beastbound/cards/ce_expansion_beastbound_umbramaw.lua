@@ -36,3 +36,18 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Shadow Rake: "Flip a coin. If heads, the Defending Beast is now Confused."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_confuse")) then
+				ctx:ApplyCondition(ctx.defender, "Confused")
+			end
+		end,
+		[2] = function(ctx)
+			-- Corrupted Eclipse: "Also does 30 damage to each of your Benched Beasts."
+			ctx:DamageOwnBench(30)
+		end,
+	},
+}

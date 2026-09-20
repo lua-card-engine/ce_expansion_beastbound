@@ -34,3 +34,18 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Battering Ram: "Does 30 more damage if the Defending Beast already has damage on it."
+			ModifyDamage = function(ctx, damage)
+				if (ctx:GetDamageOn(ctx.defender) > 0) then
+					return damage + 30
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

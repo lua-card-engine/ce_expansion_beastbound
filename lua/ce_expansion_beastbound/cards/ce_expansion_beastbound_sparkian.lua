@@ -31,3 +31,21 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Volt Surge: "Discard an Energy attached to Sparkian: this attack does 20 more damage."
+			ModifyDamage = function(ctx, damage)
+				-- An optional cost, so the player is asked rather than charged
+				if (ctx:CountEnergy(ctx.attacker) > 0
+					and ctx:Confirm("ce_expansion_beastbound_prompt_discard_for_damage")
+					and ctx:DiscardEnergy(ctx.attacker, 1)) then
+					return damage + 20
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

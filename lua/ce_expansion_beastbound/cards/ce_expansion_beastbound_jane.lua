@@ -11,3 +11,16 @@ CARD.Attributes = {
 	Supertype = "Supporter",
 	CardNumber = 50,
 }
+
+CARD.GameRules = {
+	-- "Heal 30 damage from 1 of your Beasts."
+	OnPlay = function(ctx)
+		local target = ctx:ChooseOwnBeast()
+
+		if (not target) then
+			return false
+		end
+
+		ctx:Heal(target, 30)
+	end,
+}

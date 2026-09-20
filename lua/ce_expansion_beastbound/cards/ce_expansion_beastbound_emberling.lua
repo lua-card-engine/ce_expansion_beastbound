@@ -30,3 +30,14 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Flame Pulse: "Flip a coin. If heads, the Defending Beast is now Burned."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_burn")) then
+				ctx:ApplyCondition(ctx.defender, "Burned")
+			end
+		end,
+	},
+}

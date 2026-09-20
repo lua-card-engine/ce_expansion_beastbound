@@ -1,16 +1,15 @@
 CardEngine = CardEngine or {}
 CardEngine.ExpansionSets = CardEngine.ExpansionSets or {}
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
+CardEngine.ExpansionSets.Beastbound.EXPANSION_SET_ID = "ce_expansion_beastbound"
 
 hook.Add(
 	"CardEngineInitializeExpansionSets",
 	"CardEngine.Beastbound.InitializeExpansionSet",
 	function()
-		local EXPANSION_SET_ID = "ce_expansion_beastbound"
-
 		-- Register the expansion set with its metadata and filterable attributes
 		CardEngine.ExpansionSet.Register({
-			UniqueID = EXPANSION_SET_ID,
+			UniqueID = CardEngine.ExpansionSets.Beastbound.EXPANSION_SET_ID,
 			Name = "expansion_set_ce_expansion_beastbound",
 			RemoteDownloadURL = "https://card-engine-r2.luttonline.nl",
 
@@ -71,7 +70,7 @@ hook.Add(
 			nil,
 			-- Automatically inject the ExpansionSet property into all cards loaded from this expansion set
 			function(fileName, cardFilePath)
-				CARD.ExpansionSet = EXPANSION_SET_ID
+				CARD.ExpansionSet = CardEngine.ExpansionSets.Beastbound.EXPANSION_SET_ID
 			end
 		)
 
@@ -86,7 +85,7 @@ hook.Add(
 			ALL_CARDS,
 			-- Automatically inject the ExpansionSet property into all cards loaded from this expansion set
 			function(fileName, cardFilePath)
-				CARD.ExpansionSet = EXPANSION_SET_ID
+				CARD.ExpansionSet = CardEngine.ExpansionSets.Beastbound.EXPANSION_SET_ID
 			end
 		)
 		--]]
@@ -95,10 +94,17 @@ hook.Add(
 			CardEngine.PathCombine("ce_expansion_beastbound", "boosters/"),
 			nil,
 			function(fileName, boosterFilePath)
-				BOOSTER.ExpansionSet = EXPANSION_SET_ID
+				BOOSTER.ExpansionSet = CardEngine.ExpansionSets.Beastbound.EXPANSION_SET_ID
 			end
 		)
 
 		CardEngine.Language.IncludeDirectory(CardEngine.PathCombine("ce_expansion_beastbound", "languages/"))
+
+		-- The rules of the game itself: zones, turns, actions, conditions and how it is presented.
+		-- Registration is deferred until every file in here has loaded, so it does not matter which
+		-- order the folder is read in.
+		CardEngine.IncludeDirectory(CardEngine.PathCombine("ce_expansion_beastbound", "rules/"))
+
+		CardEngine.ExpansionSets.Beastbound.RegisterGameRules()
 	end
 )

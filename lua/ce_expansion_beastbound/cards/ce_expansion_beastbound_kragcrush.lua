@@ -34,3 +34,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Cataclysm: "Kragcrush can't attack during your next turn."
+			ctx:AddEffectUntilOwnTurnEnds("beastbound_cannot_attack", nil, ctx.attacker)
+		end,
+	},
+}

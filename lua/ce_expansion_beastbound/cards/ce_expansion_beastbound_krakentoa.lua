@@ -34,3 +34,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Abyssal Crush: "Does 20 more damage for each other Water-type Beast on your Bench (max +60)."
+			ModifyDamage = function(ctx, damage)
+				local water = math.min(3, ctx:CountBenchOfType("Water"))
+				
+				return damage + water * 20
+			end,
+		},
+	},
+}

@@ -35,3 +35,24 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Static Claws: "Flip a coin. If heads, the Defending Beast is Paralyzed."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_paralyze")) then
+				ctx:ApplyCondition(ctx.defender, "Paralyzed")
+			end
+		end,
+		[2] = {
+			-- Storm Sabre: "Does 40 more damage if this Beast has no damage counters on it."
+			ModifyDamage = function(ctx, damage)
+				if (ctx:GetDamageOn(ctx.attacker) == 0) then
+					return damage + 40
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

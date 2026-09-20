@@ -35,3 +35,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Conductive Sludge: "The Defending Beast is now Paralyzed."
+			ctx:ApplyCondition(ctx.defender, "Paralyzed")
+		end,
+		[2] = function(ctx)
+			-- Overload Surge: "Does 30 damage to Maelsludge."
+			ctx:DamageSelf(30)
+		end,
+	},
+}

@@ -35,3 +35,22 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Thunder Fang: "Flip a coin. If heads, the Defending Beast is now Confused."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_confuse")) then
+				ctx:ApplyCondition(ctx.defender, "Confused")
+			end
+		end,
+		[2] = function(ctx)
+			-- Maelstrom Bolt: "Also does 20 damage to 1 of your opponent's Benched Beasts."
+			local target = ctx:ChooseOpponentBench()
+			
+			if (target) then
+				ctx:Damage(target, 20)
+			end
+		end,
+	},
+}

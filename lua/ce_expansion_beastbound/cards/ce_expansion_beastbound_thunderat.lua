@@ -31,3 +31,18 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Charged Tackle: "Does 20 more damage if Thunderat has 2 or more Energy attached."
+			ModifyDamage = function(ctx, damage)
+				if (ctx:CountEnergy(ctx.attacker) >= 2) then
+					return damage + 20
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

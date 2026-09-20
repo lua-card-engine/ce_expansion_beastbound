@@ -35,3 +35,18 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Molten Slam: "Flip a coin. If heads, the Defending Beast is now Burned."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_burn")) then
+				ctx:ApplyCondition(ctx.defender, "Burned")
+			end
+		end,
+		[2] = function(ctx)
+			-- Eruption: "Also does 20 damage to each of your opponent's Benched Beasts."
+			ctx:DamageOpponentBench(20)
+		end,
+	},
+}

@@ -34,3 +34,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Static Gale: "Also does 10 damage to each of your opponent's Benched Beasts."
+			ctx:DamageOpponentBench(10)
+		end,
+		[2] = function(ctx)
+			-- Thunderbird's Wrath: "Discard 2 Energy attached to Voltaris."
+			ctx:DiscardEnergy(ctx.attacker, 2)
+		end,
+	},
+}

@@ -119,7 +119,7 @@ Retreat Cost gets a ±1 flavor adjustment for especially bulky lines (rock/turtl
 
 ## 10. Rarity & the booster pack
 
-The existing booster (`ce_expansion_beastbound_first_booster.lua`) defines an 11-card pack: 4 Common slots, 1 Common-Supporter slot, 3 Uncommon slots, 1 Rare slot, and 2 Common-Energy slots. Rarity in this set is assigned so every slot always has legal cards to draw, without any code changes:
+The boosters (`ce_expansion_beastbound_booster_*.lua`, three cosmetic variants of the same pack) define an 11-card pack: 4 Common slots, 1 Common-Supporter slot, 3 Uncommon slots, 1 Rare slot, and 2 Common-Energy slots. Rarity in this set is assigned so every slot always has legal cards to draw, without any code changes:
 
 | Rarity | Cards |
 |---|---|

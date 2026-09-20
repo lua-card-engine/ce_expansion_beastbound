@@ -31,3 +31,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Gravity Pull: "Move a Special Condition affecting Stargazer to the Defending Beast instead."
+			ctx:TransferConditions(ctx.attacker, ctx.defender)
+		end,
+	},
+}

@@ -34,3 +34,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Gilded Purr: "Heal 20 damage from Luxpaws."
+			ctx:HealSelf(20)
+		end,
+		[2] = function(ctx)
+			-- Ankh Radiance: "Heal 30 damage from each of your Beasts."
+			ctx:HealOwnBeasts(30)
+		end,
+	},
+}

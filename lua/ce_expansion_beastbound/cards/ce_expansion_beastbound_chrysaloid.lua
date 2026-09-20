@@ -30,3 +30,14 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Sting Peck: "Flip a coin. If heads, the Defending Beast is now Poisoned."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_poison")) then
+				ctx:ApplyCondition(ctx.defender, "Poisoned")
+			end
+		end,
+	},
+}

@@ -30,3 +30,14 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Static Nip: "Flip a coin. If heads, the Defending Beast is Paralyzed."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_paralyze")) then
+				ctx:ApplyCondition(ctx.defender, "Paralyzed")
+			end
+		end,
+	},
+}

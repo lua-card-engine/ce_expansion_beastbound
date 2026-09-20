@@ -34,3 +34,18 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Deluge: "Flip a coin. If heads, this attack does 30 more damage."
+			ModifyDamage = function(ctx, damage)
+				if (ctx:FlipHeads("ce_expansion_beastbound_flip_bonus_damage")) then
+					return damage + 30
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

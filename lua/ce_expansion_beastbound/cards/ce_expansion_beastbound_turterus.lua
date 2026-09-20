@@ -31,3 +31,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Hard Shell: "During your opponent's next turn, this Beast takes 20 less damage from attacks."
+			ctx:AddEffectUntilOpponentTurnEnds("beastbound_damage_reduction", { amount = 20 })
+		end,
+	},
+}

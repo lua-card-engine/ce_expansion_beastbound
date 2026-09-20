@@ -35,3 +35,24 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Cinder Slash: "Flip a coin. If heads, the Defending Beast is now Burned."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_burn")) then
+				ctx:ApplyCondition(ctx.defender, "Burned")
+			end
+		end,
+		[2] = {
+			-- Inferno Pounce: "Does 30 more damage if the Defending Beast is Burned."
+			ModifyDamage = function(ctx, damage)
+				if (ctx:HasCondition(ctx.defender, "Burned")) then
+					return damage + 30
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

@@ -34,3 +34,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Fortress Guard: "During your opponent's next turn, this Beast takes 30 less damage from attacks."
+			ctx:AddEffectUntilOpponentTurnEnds("beastbound_damage_reduction", { amount = 30 })
+		end,
+	},
+}

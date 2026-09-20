@@ -30,3 +30,14 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Mirage Pulse: "Flip a coin. If heads, the Defending Beast is now Confused."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_confuse")) then
+				ctx:ApplyCondition(ctx.defender, "Confused")
+			end
+		end,
+	},
+}

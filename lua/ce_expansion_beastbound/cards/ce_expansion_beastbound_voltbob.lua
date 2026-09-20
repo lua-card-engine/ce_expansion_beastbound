@@ -30,3 +30,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Ooze Spark: "Does 10 damage to Voltbob."
+			ctx:DamageSelf(10)
+		end,
+	},
+}

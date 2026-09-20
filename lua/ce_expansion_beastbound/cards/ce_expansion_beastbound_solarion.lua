@@ -34,3 +34,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Supernova: "Does 30 damage to Solarion."
+			ctx:DamageSelf(30)
+		end,
+	},
+}

@@ -31,3 +31,13 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Frost Spray: "During your opponent's next turn, the Defending Beast's Retreat Cost is 2 more."
+			ctx:AddEffectUntilOpponentTurnEnds("beastbound_retreat_cost_increase",
+				{ amount = 2 }, ctx.defender)
+		end,
+	},
+}

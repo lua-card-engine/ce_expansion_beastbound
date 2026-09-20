@@ -31,3 +31,20 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Solar Flare: "Discard a Fire Energy attached to Pyrenax: this attack does 30 more damage."
+			ModifyDamage = function(ctx, damage)
+				if (ctx:CountEnergy(ctx.attacker, "Fire") > 0
+					and ctx:Confirm("ce_expansion_beastbound_prompt_discard_for_damage")
+					and ctx:DiscardEnergy(ctx.attacker, 1, "Fire")) then
+					return damage + 30
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

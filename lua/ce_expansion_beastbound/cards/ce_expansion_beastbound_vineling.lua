@@ -30,3 +30,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Leech: "Heal 10 damage from Vineling."
+			ctx:HealSelf(10)
+		end,
+	},
+}

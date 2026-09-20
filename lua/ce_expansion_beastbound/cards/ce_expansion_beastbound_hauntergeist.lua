@@ -31,3 +31,12 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = function(ctx)
+			-- Nightmare: "The Defending Beast is now Asleep."
+			ctx:ApplyCondition(ctx.defender, "Asleep")
+		end,
+	},
+}

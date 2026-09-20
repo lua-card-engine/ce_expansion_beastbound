@@ -30,3 +30,18 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Psy Spark: "Flip a coin. If tails, this attack does nothing."
+			ModifyDamage = function(ctx, damage)
+				if (not ctx:FlipHeads("ce_expansion_beastbound_flip_attack_works")) then
+					return 0
+				end
+				
+				return damage
+			end,
+		},
+	},
+}

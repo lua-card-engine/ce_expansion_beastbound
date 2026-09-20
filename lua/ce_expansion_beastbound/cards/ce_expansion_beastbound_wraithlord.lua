@@ -35,3 +35,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Cursed Grip: "The Defending Beast is now Asleep."
+			ctx:ApplyCondition(ctx.defender, "Asleep")
+		end,
+		[2] = function(ctx)
+			-- Soul Drain: "Heal 30 damage from Wraithlord."
+			ctx:HealSelf(30)
+		end,
+	},
+}

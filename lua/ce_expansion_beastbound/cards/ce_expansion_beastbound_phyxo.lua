@@ -31,3 +31,14 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Confuse Ray: "Flip a coin. If heads, the Defending Beast is now Confused."
+			if (ctx:FlipHeads("ce_expansion_beastbound_flip_confuse")) then
+				ctx:ApplyCondition(ctx.defender, "Confused")
+			end
+		end,
+	},
+}

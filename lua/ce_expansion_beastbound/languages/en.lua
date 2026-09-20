@@ -15,6 +15,132 @@ return {
 	["ce_expansion_beastbound_deck_rule_needs_basic_beast"] = "At least one Basic Beast",
 
 	--[[
+		The game
+	--]]
+
+	["ce_expansion_beastbound_game_name"] = "Beastbound",
+
+	--[[
+		Special Conditions
+	--]]
+
+	["ce_expansion_beastbound_condition_paralyzed"] = "Paralyzed",
+	["ce_expansion_beastbound_condition_confused"] = "Confused",
+	["ce_expansion_beastbound_condition_asleep"] = "Asleep",
+	["ce_expansion_beastbound_condition_poisoned"] = "Poisoned",
+	["ce_expansion_beastbound_condition_burned"] = "Burned",
+
+	--[[
+		Coin flips
+	--]]
+
+	["ce_expansion_beastbound_flip_confusion"] = "Confusion: tails and the attack fails",
+	["ce_expansion_beastbound_flip_burn_recovery"] = "Burn: heads and it wears off",
+	["ce_expansion_beastbound_flip_sleep_recovery"] = "Sleep: heads and it wakes up",
+	["ce_expansion_beastbound_flip_burn"] = "Heads and the Defending Beast is Burned",
+	["ce_expansion_beastbound_flip_confuse"] = "Heads and the Defending Beast is Confused",
+	["ce_expansion_beastbound_flip_paralyze"] = "Heads and the Defending Beast is Paralyzed",
+	["ce_expansion_beastbound_flip_poison"] = "Heads and the Defending Beast is Poisoned",
+	["ce_expansion_beastbound_flip_attack_works"] = "Tails and the attack does nothing",
+	["ce_expansion_beastbound_flip_bonus_damage"] = "Heads for extra damage",
+
+	--[[
+		Questions a card asks
+	--]]
+
+	["ce_expansion_beastbound_prompt_choose_active"] = "Choose your Active Beast.",
+	["ce_expansion_beastbound_prompt_choose_bench"] = "Choose any Basic Beasts to put on your Bench.",
+	["ce_expansion_beastbound_prompt_promote"] = "Choose a Beast to take the Active spot.",
+	["ce_expansion_beastbound_prompt_choose_own_beast"] = "Choose one of your Beasts.",
+	["ce_expansion_beastbound_prompt_choose_opponent_bench"] = "Choose one of your opponent's Benched Beasts.",
+	["ce_expansion_beastbound_prompt_discard_energy"] = "Choose Energy to discard.",
+	["ce_expansion_beastbound_prompt_discard_retreat_energy"] = "Discard Energy to pay the Retreat Cost.",
+	["ce_expansion_beastbound_prompt_discard_from_hand"] = "Choose a card to discard from your hand.",
+	["ce_expansion_beastbound_prompt_search_deck"] = "Choose a card from your deck.",
+	["ce_expansion_beastbound_prompt_order_bottom"] = "Put these on the bottom of your deck, in any order.",
+	["ce_expansion_beastbound_prompt_discard_for_damage"] = "Discard Energy to make this attack stronger?",
+	["ce_expansion_beastbound_prompt_tome_of_fate"] = "Choose a card to put into your hand.",
+	["ce_expansion_beastbound_prompt_corrupt_luxpaws"] = "Choose a Luxpaws to corrupt into Umbramaw.",
+
+	--[[
+		Lasting effects
+	--]]
+
+	["ce_expansion_beastbound_effect_damage_reduction"] = "Takes less damage",
+	["ce_expansion_beastbound_effect_damage_bonus"] = "Attacks do more damage",
+	["ce_expansion_beastbound_effect_retreat_increase"] = "Costs more to retreat",
+	["ce_expansion_beastbound_effect_retreat_free"] = "Retreats for free",
+	["ce_expansion_beastbound_effect_cannot_attack"] = "Can't attack",
+	["ce_expansion_beastbound_effect_ward_basic"] = "Warded against Basic Beasts",
+
+	--[[
+		Why an action was refused
+	--]]
+
+	["ce_expansion_beastbound_already_attached_energy"] = "You've already attached Energy this turn.",
+	["ce_expansion_beastbound_no_energy_in_hand"] = "You have no Energy card in hand.",
+	["ce_expansion_beastbound_no_item_in_hand"] = "You have no Item card in hand.",
+	["ce_expansion_beastbound_no_supporter_in_hand"] = "You have no Supporter card in hand.",
+	["ce_expansion_beastbound_no_basic_in_hand"] = "You have no Basic Beast in hand.",
+	["ce_expansion_beastbound_nothing_to_evolve"] = "Nothing in your hand evolves a Beast you have in play.",
+	["ce_expansion_beastbound_nothing_to_retreat_to"] = "You have no Benched Beast to bring out.",
+	["ce_expansion_beastbound_attack_button"] = "{name}  {damage}",
+	["ce_expansion_beastbound_attack_button_no_damage"] = "{name}",
+	["ce_expansion_beastbound_already_played_supporter"] = "You've already played a Supporter this turn.",
+	["ce_expansion_beastbound_already_retreated"] = "You've already retreated this turn.",
+	["ce_expansion_beastbound_already_evolved"] = "That Beast has already evolved this turn.",
+	["ce_expansion_beastbound_played_this_turn"] = "A Beast can't evolve the turn it was played.",
+	["ce_expansion_beastbound_card_not_in_hand"] = "That card isn't in your hand.",
+	["ce_expansion_beastbound_not_energy"] = "That isn't an Energy card.",
+	["ce_expansion_beastbound_not_item"] = "That isn't an Item card.",
+	["ce_expansion_beastbound_not_supporter"] = "That isn't a Supporter card.",
+	["ce_expansion_beastbound_not_beast"] = "That isn't a Beast card.",
+	["ce_expansion_beastbound_not_basic_beast"] = "Only a Basic Beast can be put into play.",
+	["ce_expansion_beastbound_does_not_evolve"] = "That card doesn't evolve from anything.",
+	["ce_expansion_beastbound_wrong_evolution"] = "That card doesn't evolve from that Beast.",
+	["ce_expansion_beastbound_hidden_evolution"] = "That Beast can only be put into play by another card.",
+	["ce_expansion_beastbound_no_such_beast"] = "That Beast isn't in play.",
+	["ce_expansion_beastbound_no_active_beast"] = "You have no Active Beast.",
+	["ce_expansion_beastbound_no_defending_beast"] = "Your opponent has no Active Beast to attack.",
+	["ce_expansion_beastbound_no_such_attack"] = "That Beast doesn't have that attack.",
+	["ce_expansion_beastbound_not_enough_energy"] = "That Beast doesn't have the Energy for that attack.",
+	["ce_expansion_beastbound_not_enough_energy_to_retreat"] = "That Beast doesn't have the Energy to retreat.",
+	["ce_expansion_beastbound_cannot_attack_now"] = "That Beast can't attack right now.",
+	["ce_expansion_beastbound_bench_full"] = "Your Bench is full.",
+
+	--[[
+		The match log
+	--]]
+
+	["ce_expansion_beastbound_log_attached_energy"] = "{player} attached {card} to {target}.",
+	["ce_expansion_beastbound_log_played_card"] = "{player} played {card}.",
+	["ce_expansion_beastbound_log_benched"] = "{player} put {card} on their Bench.",
+	["ce_expansion_beastbound_log_evolved"] = "{player} evolved into {card}.",
+	["ce_expansion_beastbound_log_retreated"] = "{player} retreated, bringing out {card}.",
+	["ce_expansion_beastbound_log_attacked"] = "{player}'s {card} used {attack}.",
+	["ce_expansion_beastbound_log_damage"] = "{target} took {amount} damage.",
+	["ce_expansion_beastbound_log_damage_weak"] = "{target} took {amount} damage. Weakness!",
+	["ce_expansion_beastbound_log_damage_resisted"] = "{target} took {amount} damage. Resisted.",
+	["ce_expansion_beastbound_log_healed"] = "{target} healed {amount} damage.",
+	["ce_expansion_beastbound_log_knocked_out"] = "{target} was Knocked Out.",
+	["ce_expansion_beastbound_log_prize_taken"] = "{player} took a Prize card. {remaining} left.",
+	["ce_expansion_beastbound_log_condition_applied"] = "{target} is now {condition}.",
+	["ce_expansion_beastbound_log_condition_cured"] = "{target} is no longer {condition}.",
+	["ce_expansion_beastbound_log_promoted"] = "{target} moved into the Active spot.",
+	["ce_expansion_beastbound_log_mulligan"] = "{player} had no Basic Beast and redrew.",
+	["ce_expansion_beastbound_log_a_card"] = "a card",
+	["ce_expansion_beastbound_weak_marker"] = "(weak)",
+	["ce_expansion_beastbound_resisted_marker"] = "(resisted)",
+
+	--[[
+		How a match ends
+	--]]
+
+	["ce_expansion_beastbound_win_prizes"] = "all six Prize cards taken",
+	["ce_expansion_beastbound_win_no_beasts"] = "no Beasts left in play",
+	["ce_expansion_beastbound_win_decked_out"] = "no cards left to draw",
+
+	--[[
         Boosters
     --]]
 

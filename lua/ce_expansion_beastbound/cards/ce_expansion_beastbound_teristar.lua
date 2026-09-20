@@ -34,3 +34,16 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[2] = {
+			-- Celestial Surge: "Flip 2 coins. This attack does 30 more damage for each heads."
+			ModifyDamage = function(ctx, damage)
+				local heads = ctx:FlipCoin(2, "ce_expansion_beastbound_flip_bonus_damage")
+				
+				return damage + heads * 30
+			end,
+		},
+	},
+}

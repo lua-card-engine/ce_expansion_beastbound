@@ -35,3 +35,22 @@ CARD.Attributes = {
 		},
 	},
 }
+
+CARD.GameRules = {
+	Attacks = {
+		[1] = function(ctx)
+			-- Overgrowth: "Heal 20 damage from Foresthing."
+			ctx:HealSelf(20)
+		end,
+		[2] = function(ctx)
+			-- Ancient Roots: "Search your deck for a Energy card, attach it to Foresthing, then shuffle your deck."
+			local found = ctx:SearchDeck({ Supertype = "Energy" }, 1)
+			
+			if (found[1]) then
+				ctx:AttachEnergy(found[1], ctx.attacker)
+			end
+			
+			ctx:ShuffleDeck()
+		end,
+	},
+}
