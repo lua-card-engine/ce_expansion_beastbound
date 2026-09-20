@@ -4,7 +4,7 @@ CARD.Name = "ce_expansion_beastbound_tadpool"
 CARD.Description = "ce_expansion_beastbound_tadpool_description"
 CARD.Texture = "card_engine/expansions/ce_expansion_beastbound/tadpool"
 CARD.RearTexture = "card_engine/expansions/ce_expansion_beastbound/back"
-CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON
+CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON_ROUNDED
 
 CARD.Attributes = {
 	Rarity = "Common",

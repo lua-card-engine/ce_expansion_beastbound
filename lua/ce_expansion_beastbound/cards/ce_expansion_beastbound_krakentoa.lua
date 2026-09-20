@@ -4,7 +4,10 @@ CARD.Name = "ce_expansion_beastbound_krakentoa"
 CARD.Description = "ce_expansion_beastbound_krakentoa_description"
 CARD.Texture = "card_engine/expansions/ce_expansion_beastbound/krakentoa"
 CARD.RearTexture = "card_engine/expansions/ce_expansion_beastbound/back"
-CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON
+CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON_ROUNDED
+
+CARD.HolographicStrength = Vector(1, 1, 1)
+CARD.HolographicTexture = "card_engine/holo_rainbow_strong"
 
 CARD.Attributes = {
 	Rarity = "Rare",

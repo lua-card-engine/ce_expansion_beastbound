@@ -4,7 +4,7 @@ CARD.Name = "ce_expansion_beastbound_thunderat"
 CARD.Description = "ce_expansion_beastbound_thunderat_description"
 CARD.Texture = "card_engine/expansions/ce_expansion_beastbound/thunderat"
 CARD.RearTexture = "card_engine/expansions/ce_expansion_beastbound/back"
-CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON
+CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON_ROUNDED
 
 CARD.Attributes = {
 	Rarity = "Uncommon",

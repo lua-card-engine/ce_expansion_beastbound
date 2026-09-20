@@ -1,9 +1,9 @@
 local BOOSTER = BOOSTER
 
-BOOSTER.Name = "ce_expansion_beastbound_booster"
+BOOSTER.Name = "ce_expansion_beastbound_booster_luxpaws"
 BOOSTER.Description = "ce_expansion_beastbound_booster_description"
-BOOSTER.Material = "card_engine/expansions/ce_expansion_beastbound/booster.png"
-BOOSTER.FrontTexture = "card_engine/expansions/ce_expansion_beastbound/booster"
+BOOSTER.Material = "card_engine/expansions/ce_expansion_beastbound/booster_luxpaws_front.png"
+BOOSTER.FrontTexture = "card_engine/expansions/ce_expansion_beastbound/booster_luxpaws"
 BOOSTER.RearTexture = "card_engine/expansions/ce_expansion_beastbound/booster_back"
 
 -- The width and height of the booster pack material in pixels.

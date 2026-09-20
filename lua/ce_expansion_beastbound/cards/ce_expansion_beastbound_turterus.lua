@@ -4,7 +4,7 @@ CARD.Name = "ce_expansion_beastbound_turterus"
 CARD.Description = "ce_expansion_beastbound_turterus_description"
 CARD.Texture = "card_engine/expansions/ce_expansion_beastbound/turterus"
 CARD.RearTexture = "card_engine/expansions/ce_expansion_beastbound/back"
-CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON
+CARD.CardSize = CardEngine.DEFAULT_CARD_MODELS.COMMON_ROUNDED
 
 CARD.Attributes = {
 	Rarity = "Uncommon",

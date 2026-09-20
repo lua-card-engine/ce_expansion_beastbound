@@ -10,7 +10,9 @@ return {
         Boosters
     --]]
 
-	["ce_expansion_beastbound_booster"] = "Beastbound Booster Pack",
+	["ce_expansion_beastbound_booster_voltaris"] = "Beastbound Booster Pack (Voltaris)",
+	["ce_expansion_beastbound_booster_luxpaws"] = "Beastbound Booster Pack (Luxpaws)",
+	["ce_expansion_beastbound_booster_umbramaw"] = "Beastbound Booster Pack (Umbramaw)",
 	["ce_expansion_beastbound_booster_description"] =
 	"A booster pack containing random cards from the Beastbound expansion.",
 
