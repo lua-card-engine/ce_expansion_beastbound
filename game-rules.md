@@ -6,7 +6,7 @@ A 2-player collectible card game. This document defines the rules engine; see [g
 
 Every card is one of four supertypes:
 
-- **Beast** — a monster you battle with. Has a Stage (1, 2, or 3), an HP total, a Type, up to 2 attacks, a Weakness, a Resistance, and a Retreat Cost.
+- **Beast** — a monster you battle with. Has a Stage (Basic / Stage 1 / Stage 2), an HP total, a Type, up to 2 attacks, a Weakness, a Resistance, and a Retreat Cost.
 - **Supporter** — a named character card with a one-time effect. Playing one uses your turn's single Supporter play (see §5).
 - **Item** — an equipment or consumable card with a one-time or persistent effect. Unlike Supporters, you may play any number of Items per turn.
 - **Energy** — a Energy card provides 1 Energy of its printed type when attached to a Beast. There is one Energy per type (Electric, Fighting, Fire, Psychic, Water, Nature).
