@@ -89,6 +89,12 @@ BOOSTER.CardPool = {
 	"ce_expansion_beastbound_psychic_energy",
 	"ce_expansion_beastbound_water_energy",
 	"ce_expansion_beastbound_nature_energy",
+
+	-- Legendaries (hidden rares)
+	"ce_expansion_beastbound_voltaris",
+	"ce_expansion_beastbound_luxpaws",
+	"ce_expansion_beastbound_umbramaw",
+	"ce_expansion_beastbound_legendary_corrupter",
 }
 
 -- Each slot rolls its attributeWeights, then picks a random card that matches the roll and its requiredAttributes.
@@ -148,10 +154,11 @@ BOOSTER.SlotConfiguration = {
 		},
 	},
 
-	-- Slot 9: A guaranteed Rare (17 final-evolution Beasts and 2 Items)
+	-- Slot 9: A guaranteed Rare (17 final-evolution Beasts and 2 Items). 1 in 50 packs has a hidden Legendary here
+	-- instead (Voltaris, Luxpaws, Umbramaw or the Legendary Corrupter), so each Legendary is roughly a 1 in 200 pull.
 	{
 		attributeWeights = {
-			Rarity = { Rare = 1 },
+			Rarity = { Rare = 49, Legendary = 1 },
 		},
 	},
 

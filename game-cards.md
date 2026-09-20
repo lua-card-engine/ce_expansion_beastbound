@@ -195,3 +195,30 @@ Attack costs are a number of Energy **of the Beast's own type** (this set has no
 | 064 | Nature Energy | `design/nature.png` |
 
 Each Energy card's only rule text is "Attach to 1 of your Beasts. Provides 1 [Type] Energy."
+
+---
+
+## Legendary Hidden Rares — 065/064 to 068/064
+
+These four cards are numbered past the end of the 64-card set and only appear in packs as a rare-slot upgrade (see [game-rules.md](game-rules.md) §10). A deck may contain only 1 copy of each named Legendary card (all four can still be in the same deck).
+
+### Voltaris — Electric · Weakness: Water · Resistance: Fire *(no evolution line)*
+
+| # | Name | Stage | Evolves from | HP | Retreat | Attacks |
+|---|---|---|---|---|---|---|
+| 065 | Voltaris | Basic | — | 140 | 1 | **Static Gale** (2, 50 dmg) — Also does 10 damage to each of your opponent's Benched Beasts.<br>**Thunderbird's Wrath** (4, 160 dmg) — Discard 2 Energy attached to Voltaris. |
+
+### Luxpaws → Umbramaw — Psychic · Weakness: Electric · Resistance: Nature *(hidden evolution)*
+
+| # | Name | Stage | Evolves from | HP | Retreat | Attacks |
+|---|---|---|---|---|---|---|
+| 066 | Luxpaws | Basic | — | 100 | 1 | **Gilded Purr** (1, 20 dmg) — Heal 20 damage from Luxpaws.<br>**Ankh Radiance** (3, 80 dmg) — Heal 30 damage from each of your Beasts. |
+| 067 | Umbramaw | Stage 1 | Luxpaws (only with Legendary Corrupter) | 190 | 2 | **Shadow Rake** (2, 60 dmg) — Flip a coin. If heads, the Defending Beast is now Confused.<br>**Corrupted Eclipse** (4, 170 dmg) — Also does 30 damage to each of your Benched Beasts. |
+
+Umbramaw can't be evolved normally. The only way to play it is the Legendary Corrupter below.
+
+### Legendary Corrupter *(Item)*
+
+| # | Name | Art | Rarity | Effect |
+|---|---|---|---|---|
+| 068 | Legendary Corrupter | `design/items/legendary-corrupter.png` | Legendary | Evolve 1 of your Luxpaws into Umbramaw from your hand or deck. Shuffle your deck afterward. |

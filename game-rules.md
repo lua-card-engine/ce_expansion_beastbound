@@ -48,7 +48,7 @@ Attack costs are paid only in the attacking Beast's own type — there is no col
 ## 3. Deck construction
 
 - A deck has exactly **60 cards**.
-- No more than **4 copies** of any single named card, except Energy (unlimited copies).
+- No more than **4 copies** of any single named card, except Energy (unlimited copies). Legendary cards (see §10) are limited to **1 copy per card name**, so a deck may hold one Luxpaws, one Umbramaw and one Legendary Corrupter together.
 - A legal deck must contain at least one Stage-1 Beast (you need one to start the game).
 
 ## 4. Setup
@@ -67,7 +67,7 @@ Each turn, in order:
    - Attach **1 Energy card** from your hand to 1 of your Beasts (once per turn).
    - Play any number of **Item** cards.
    - Play **1 Supporter** card (once per turn — the 3 named characters, Jack/Jane/Shane, are Supporters).
-   - **Evolve** a Beast by placing the next-stage card from your hand on top of it (a Beast can't evolve the turn it was played, and can't evolve more than once per turn).
+   - **Evolve** a Beast by placing the next-stage card from your hand on top of it (a Beast can't evolve the turn it was played, and can't evolve more than once per turn). Umbramaw is a hidden evolution: it can't be evolved normally, only through the **Legendary Corrupter** Item (see §10).
    - **Retreat**: once per turn, discard Energy from your Active Beast equal to its Retreat Cost to swap it with a Benched Beast.
 3. **Attack** — declare 1 attack your Active Beast has enough Energy attached to pay for, resolve its effect and damage, then your turn ends. Attacking is optional; you may end your turn without attacking.
 4. **Between turns** — resolve Poison and Burn damage, then check Paralysis/Sleep/Confusion recovery, for whichever Beast is affected (see §6).
@@ -103,7 +103,7 @@ Every Beast card prints, top to bottom:
 - The **illustration**.
 - An **info box** listing its attacks — this design standardizes on **exactly 2 attacks per Beast** (the physical layout has room for a 3rd; that slot is reserved for future promo/special cards, not used in the base set). Each attack shows its Energy cost as colored pips, its name, up to 2 lines of rules text, and its damage number.
 - A footer row with **Weakness**, **Resistance**, and **Retreat Cost** (each as a type icon, or a number of pips for Retreat).
-- A card number (`NNN/064`) and artist credit.
+- A card number (`NNN/064`, or `065/064` to `068/064` for the four hidden Legendaries) and artist credit.
 
 ## 9. Design baseline (for consistency, and for any future expansion)
 
@@ -124,4 +124,18 @@ The existing booster (`ce_expansion_beastbound_first_booster.lua`) defines an 11
 | **Common** | All 17 Stage-1 Beasts, all 3 Supporters, 2 Items (Minor Potion, Noxious Draught) |
 | **Uncommon** | All 14 Stage-2 (mid-evolution) Beasts, 3 Items (Tactic Scroll, Boots of Flight, Lion Gauntlets) |
 | **Rare** | All 17 final-evolution Beasts, 2 Items (Runic Sword, Tome of Fate) |
+| **Legendary** (hidden rare) | Voltaris, Luxpaws, Umbramaw, Legendary Corrupter |
 | **Energy** (own slot type, always Common) | All 6 Energy |
+
+### Hidden Legendaries
+
+The four Legendary cards are numbered **065/064 to 068/064**, past the end of the 64-card set, so a collector only learns they exist by pulling one. They are not part of the Common/Uncommon/Rare pools above. Instead, the booster's Rare slot has a 1-in-50 chance of giving one Legendary (picked at random from the four) in place of the Rare.
+
+| # | Card | Notes |
+|---|---|---|
+| 065 | **Voltaris** (Electric, Basic) | A legendary thunderbird with no evolution line. Playable as a Basic Beast, with big HP and a costly 4-Energy finisher. |
+| 066 | **Luxpaws** (Psychic, Basic) | A legendary winged cat with healing attacks. Its only evolution is hidden. |
+| 067 | **Umbramaw** (Psychic, Stage 1) | Luxpaws' corrupted evolution. It can only be put into play by the Legendary Corrupter, never by the normal evolve action. |
+| 068 | **Legendary Corrupter** (Item) | Evolves 1 of your Luxpaws into Umbramaw from your hand or deck. |
+
+Legendary cards are limited to 1 copy of each named card per deck (see §3). This is not a cap on Legendaries overall: all four may be in the same deck, and the Luxpaws, Umbramaw and Corrupter trio is meant to be played together.

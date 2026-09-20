@@ -277,4 +277,21 @@ return {
 	["ce_expansion_beastbound_nature_energy"] = "Nature Energy",
 	["ce_expansion_beastbound_nature_energy_description"] =
 	"Attach to 1 of your Beasts. Provides 1 Nature Energy.",
+
+	-- Legendaries (hidden rares)
+	["ce_expansion_beastbound_voltaris"] = "Voltaris",
+	["ce_expansion_beastbound_voltaris_description"] =
+	"Voltaris, the electric-type beast, is a legendary thunderbird whose wingbeats split the sky and whose feathers crackle with the fury of a storm.",
+
+	["ce_expansion_beastbound_luxpaws"] = "Luxpaws",
+	["ce_expansion_beastbound_luxpaws_description"] =
+	"Luxpaws, the psychic-type beast, is a legendary winged cat that drifts on sacred clouds, its golden tails gathering the light of the dawn.",
+
+	["ce_expansion_beastbound_umbramaw"] = "Umbramaw",
+	["ce_expansion_beastbound_umbramaw_description"] =
+	"Umbramaw, the psychic-type beast, is what remains when Luxpaws is bound by a corrupting crystal: a cracked, shadow-furred cat whose tails drip with ruinous energy.",
+
+	["ce_expansion_beastbound_legendary_corrupter"] = "Legendary Corrupter",
+	["ce_expansion_beastbound_legendary_corrupter_description"] =
+	"Evolve 1 of your Luxpaws into Umbramaw from your hand or deck. Shuffle your deck afterward.",
 }
