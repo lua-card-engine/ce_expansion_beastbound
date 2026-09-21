@@ -198,8 +198,8 @@ Beastbound.Actions.PlayItem = {
 
 	IsAvailable = function(match, playerIndex)
 		if (not Beastbound.HandHas(match, playerIndex, function(card)
-			return card:GetAttribute("Supertype") == "Item"
-		end)) then
+				return card:GetAttribute("Supertype") == "Item"
+			end)) then
 			return false, "ce_expansion_beastbound_no_item_in_hand"
 		end
 
@@ -257,8 +257,8 @@ Beastbound.Actions.PlaySupporter = {
 		end
 
 		if (not Beastbound.HandHas(match, playerIndex, function(card)
-			return card:GetAttribute("Supertype") == "Supporter"
-		end)) then
+				return card:GetAttribute("Supertype") == "Supporter"
+			end)) then
 			return false, "ce_expansion_beastbound_no_supporter_in_hand"
 		end
 
@@ -566,6 +566,7 @@ Beastbound.Actions.Attack = {
 Beastbound.Actions.EndTurn = {
 	Phase = "Action",
 	EndsTurn = true,
+	InstantHandover = true,
 
 	IsLegal = function(match, playerIndex, params)
 		return true
