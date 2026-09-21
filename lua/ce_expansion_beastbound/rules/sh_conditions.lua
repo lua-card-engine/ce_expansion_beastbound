@@ -202,6 +202,10 @@ function Beastbound.ResolveBetweenTurnsDamage(match, instanceOrID)
 	-- A fixed order, rather than pairs(), so a Beast that is both poisoned and burned always takes
 	-- its damage the same way round and the match stays reproducible from its seed
 	for _, condition in ipairs({ "Burned", "Poisoned" }) do
+		if (Beastbound.IsKnockedOut(match, instance)) then
+			return
+		end
+
 		if (Beastbound.HasCondition(match, instance, condition)) then
 			local definition = Beastbound.CONDITIONS[condition]
 
@@ -211,7 +215,7 @@ function Beastbound.ResolveBetweenTurnsDamage(match, instanceOrID)
 			})
 
 			-- Burn burns itself out on a heads; poison does not
-			if (condition == "Burned" and match:GetInstance(instance.id)) then
+			if (condition == "Burned" and not Beastbound.IsKnockedOut(match, instance)) then
 				local heads = match:FlipCoin(1, "ce_expansion_beastbound_flip_burn_recovery", instance)
 
 				if (heads == 1) then

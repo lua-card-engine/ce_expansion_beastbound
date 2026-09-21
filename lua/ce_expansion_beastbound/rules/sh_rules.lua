@@ -204,6 +204,9 @@ function Beastbound.EndTurn(match, playerIndex)
 		return
 	end
 
+	-- The turn plays out on the board before anything between turns happens to it
+	match:Beat()
+
 	-- Between turns, Poison and Burn do their damage to whoever is out front (§5.4)
 	CardEngine.Match.SetPhase(match, "BetweenTurns")
 

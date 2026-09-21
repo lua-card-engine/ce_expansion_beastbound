@@ -318,12 +318,15 @@ function Beastbound.CheckKnockOuts(match)
 		end
 	end
 
-	for _, instance in ipairs(knockedOut) do
-		Beastbound.KnockOut(match, instance)
-	end
-
 	if (#knockedOut == 0) then
 		return
+	end
+
+	-- The blow that did it is seen landing before the Beast leaves
+	match:Beat()
+
+	for _, instance in ipairs(knockedOut) do
+		Beastbound.KnockOut(match, instance)
 	end
 
 	-- The player who lost their Active Beast promotes first, but both are checked: an attack can
