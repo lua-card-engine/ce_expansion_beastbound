@@ -1,21 +1,12 @@
---[[
-	Beastbound's own decklists
-
-	A deck the set brings itself, rather than one a player built. There is exactly one so far, and it
-	has two jobs: it is what the rules checks are run against, and it is what the practice opponent
-	brings to a match.
-
-	Those two jobs are the reason it lives here rather than in either of them. A decklist that drifts
-	out of legality should fail the self-test, loudly and at a known line, rather than quietly giving
-	the AI a deck it cannot open a game with.
---]]
+-- The set's own starter decklist. It is what the rules checks run against and what the practice
+-- opponent brings, so a list that drifts out of legality fails the self-test loudly.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
 local Beastbound = CardEngine.ExpansionSets.Beastbound
 
---- The cards in the starter deck: 60 of them, following the set's own deck rules, and weighted
---- towards Basic Beasts so that setup finds one to start with rather than mulliganing its way there.
+--- The starter deck's 60 cards, following the set's deck rules and weighted towards Basic Beasts so
+--- setup finds one without mulliganing
 local STARTER_DECK_CARDS = {
 	ce_expansion_beastbound_pyrecko = 4,
 	ce_expansion_beastbound_emberaz = 4,
@@ -32,10 +23,8 @@ local STARTER_DECK_CARDS = {
 	ce_expansion_beastbound_nature_energy = 8,
 }
 
---- Builds the starter deck, in the shape Card Engine expects a deck in.
----
---- A fresh copy each time, since a match takes a deck apart into card instances and nothing should
---- be able to reach back and change the list it was built from.
+--- Builds the starter deck in the shape Card Engine expects. A fresh copy each time, since a match
+--- takes a deck apart.
 --- @param deckID string? What to call it, for a caller that wants to tell two apart
 --- @param name string? A language key naming it
 --- @return table

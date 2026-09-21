@@ -1,12 +1,5 @@
---[[
-	Beastbound's rules checks
-
-	Run with `card_engine_match_selftest` in the server console.
-
-	These follow game-rules.md section by section, so a rule that changes in the document and a rule
-	that changes in the code should both end up here. Anything that can be checked without a match
-	is; the rest builds one with a fixed seed and drives it.
---]]
+-- Rules checks, run with `card_engine_match_selftest`. They follow game-rules.md section by section.
+-- Anything checkable without a match is; the rest builds one from a fixed seed.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
@@ -25,10 +18,6 @@ local function startTestMatch(context)
 end
 
 CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
-	--[[
-		§2 Damage
-	--]]
-
 	{
 		name = "damage applies weakness, then resistance, in that order",
 		run = function(context)
@@ -68,10 +57,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
-	--[[
-		§4 Setup
-	--]]
-
 	{
 		name = "a match deals hands, Active Beasts and six prizes",
 		run = function(context)
@@ -107,10 +92,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 			context:Equal("the match is on turn 1", match:GetTurn(), 1)
 		end,
 	},
-
-	--[[
-		§5 Per-turn limits
-	--]]
 
 	{
 		name = "energy can only be attached once a turn",
@@ -237,10 +218,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
-	--[[
-		The action bar
-	--]]
-
 	{
 		name = "a player holding Energy is offered the button to attach it",
 		run = function(context)
@@ -256,8 +233,7 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 			CardEngine.Match.CreateInstance(match,
 				"ce_expansion_beastbound_fire_energy", playerIndex, "Hand")
 
-			-- Two cards go into this: the Energy and the Beast it goes onto. Asking IsLegal with
-			-- neither of them is what used to leave every button on the bar permanently greyed out.
+			-- Two cards go into this: the Energy and the Beast it goes onto. IsLegal with neither can't judge.
 			local available, reason = match:CanStartAction(playerIndex, "AttachEnergy", 2)
 
 			context:Check("the button is offered", available, tostring(reason))
@@ -283,7 +259,7 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 
 			context:Equal("and it lands on the Beast", held.zone, active.zone)
 
-			-- Once per turn, so now the button says why not rather than going quiet
+			-- Once per turn, so the button now says why not
 			local againAvailable, againReason = match:CanStartAction(playerIndex, "AttachEnergy", 2)
 
 			context:Equal("a second attach is not offered", againAvailable, false)
@@ -313,10 +289,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
-	--[[
-		§5 Retreating
-	--]]
-
 	{
 		name = "retreating discards the energy it costs",
 		run = function(context)
@@ -329,8 +301,7 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 			local playerIndex = match:GetActivePlayerIndex()
 			local opening = match:GetZoneSlot("Active", playerIndex, 1)
 
-			-- A Beast that costs something to retreat, rather than whichever one the shuffle happened
-			-- to open with
+			-- A Beast that costs something to retreat, not whichever the shuffle opened with
 			if (opening) then
 				CardEngine.Match.MoveCard(match, opening, "Discard", playerIndex)
 			end
@@ -339,8 +310,7 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 				"ce_expansion_beastbound_turtling", playerIndex, "Active", 1)
 			CardEngine.Match.SetInstanceState(match, active, "playedOnTurn", 0)
 
-			-- Somewhere to retreat to, since the opening hand is answered by taking the first Basic
-			-- Beast offered and benching nothing
+			-- Somewhere to retreat to, since the opening hand benches nothing
 			local benched = CardEngine.Match.CreateInstance(match,
 				"ce_expansion_beastbound_starkrat", playerIndex, "Bench")
 			CardEngine.Match.SetInstanceState(match, benched, "playedOnTurn", 0)
@@ -357,8 +327,7 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 				Beastbound.Actions.Retreat.Perform(match, playerIndex, { target = benched.id })
 			end)
 
-			-- A cost of exactly one is answered with the instance itself rather than a list of them,
-			-- which is the shape that used to be read as an empty list and retreat for free
+			-- A cost of exactly one is answered with the instance itself, not a list
 			context:Equal("the energy it cost went to the discard", energy.zone, "Discard")
 			context:Equal("nothing is left attached to it",
 				Beastbound.CountEnergy(match, active), 0)
@@ -417,10 +386,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
-	--[[
-		§5 Knock Outs
-	--]]
-
 	{
 		name = "a Knock Out discards everything attached and awards one prize",
 		run = function(context)
@@ -438,8 +403,7 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 				"ce_expansion_beastbound_fire_energy", opponent, "Hand")
 			CardEngine.Match.AttachCard(match, energy, victim)
 
-			-- Something to promote, so the match does not simply end instead, and nothing else on the
-			-- bench for it to be promoted ahead of
+			-- Something to promote, so the match doesn't end instead
 			for _, instance in ipairs(match:GetZoneInstances("Bench", opponent)) do
 				CardEngine.Match.MoveCard(match, instance, "Discard", opponent)
 			end
@@ -461,10 +425,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 				match:GetZoneSlot("Active", opponent, 1), spare)
 		end,
 	},
-
-	--[[
-		§6 Special Conditions
-	--]]
 
 	{
 		name = "Poison and Burn sit alongside one other condition",
@@ -563,10 +523,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
-	--[[
-		§5 Attacking
-	--]]
-
 	{
 		name = "an attack is paid for in the Beast's own type",
 		run = function(context)
@@ -647,10 +603,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
-	--[[
-		§7 Winning
-	--]]
-
 	{
 		name = "taking the last prize wins the match",
 		run = function(context)
@@ -714,8 +666,7 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 				CardEngine.Match.MoveCard(match, instance, "Discard", opponent)
 			end
 
-			-- Hand the turn over properly: the first player skips their draw on turn 1, so the
-			-- empty deck only bites on the turn after
+			-- Hand the turn over properly: the first player skips their draw on turn 1, so the empty deck bites a turn later
 			context:Run(match, function()
 				Beastbound.EndTurn(match, playerIndex)
 			end)
@@ -728,10 +679,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 			context:Equal("for the right reason", reason, "ce_expansion_beastbound_win_decked_out")
 		end,
 	},
-
-	--[[
-		The bench
-	--]]
 
 	{
 		name = "the bench holds five and keeps its gaps",
@@ -769,10 +716,6 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 				match:GetZoneSlot("Bench", playerIndex, 3), benched[3])
 		end,
 	},
-
-	--[[
-		Card effects
-	--]]
 
 	{
 		name = "every printed effect has code behind it, and vice versa",

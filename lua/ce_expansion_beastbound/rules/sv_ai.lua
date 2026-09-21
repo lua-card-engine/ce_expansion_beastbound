@@ -1,25 +1,11 @@
---[[
-	Beastbound's practice opponent
-
-	Enough of a player to hold up its end of a game: it builds a board, feeds its Active Beast, and
-	attacks with whatever it can pay for. It is not trying to be hard to beat. It is trying to reach
-	the parts of a match that only a whole game reaches, so that a rule which only goes wrong on turn
-	nine goes wrong somewhere somebody can see it.
-
-	Everything here runs on the server, inside the match, and goes out through the same
-	CanPerformAction gate a player's request does. So a move this file gets wrong is refused rather
-	than played, and the worst an outright bug can do is waste a turn.
-
-	The order it plays in is the order a person would: set up, then commit, then swing (§5).
---]]
+-- The practice opponent: builds a board, feeds its Active Beast and attacks with whatever it can
+-- pay for, in the order a person would (§5). It aims to reach the parts of a match only a whole game
+-- reaches, not to be hard to beat. Every move goes through CanPerformAction, so a wrong one is
+-- refused rather than played.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
 local Beastbound = CardEngine.ExpansionSets.Beastbound
-
---[[
-	Reading the board
---]]
 
 --- The cards a seat is holding
 --- @param match CardEngine.Match
@@ -29,11 +15,9 @@ local function hand(match, playerIndex)
 	return match:GetZoneInstances("Hand", playerIndex)
 end
 
---- Whether an action with these parameters would be allowed right now.
----
---- Every candidate goes through here before it is returned, so the AI never proposes something the
---- server is about to refuse. It also keeps the rules the single authority: this file holds opinions
---- about what is worth doing, never about what is allowed.
+--- Whether an action with these parameters would be allowed right now. Every candidate goes
+--- through here, so the AI never proposes what the server would refuse and the rules stay the only
+--- authority.
 --- @param match CardEngine.Match
 --- @param playerIndex number
 --- @param actionName string
@@ -43,10 +27,7 @@ local function canDo(match, playerIndex, actionName, params)
 	return (CardEngine.Match.CanPerformAction(match, playerIndex, actionName, params)) == true
 end
 
---- The healthiest of a list of Beasts.
----
---- Used wherever the AI has to pick one of its own and has no better reason: the one with the most
---- HP left is the one that will still be standing next turn.
+--- The healthiest of a list of Beasts: the one with the most HP left is still standing next turn.
 --- @param match CardEngine.Match
 --- @param instances CardEngine.MatchCardInstance[]
 --- @return CardEngine.MatchCardInstance?
@@ -64,16 +45,10 @@ local function healthiest(match, instances)
 	return best
 end
 
---[[
-	Deciding what to do
+-- Each answers "is there a move of this kind worth making". They are tried in order and the first
+-- that says yes is played; the engine calls back after each one settles.
 
-	Each of these answers "is there a move of this kind worth making", and returns it if so. They are
-	tried in order, so the first one that says yes is what happens next. A turn is a run of these:
-	the engine calls back after each one settles, until something ends it.
---]]
-
---- Fills the bench. A Beast on the bench is the only thing between a knock-out and losing the game
---- (§7), so this comes before anything clever.
+--- Fills the bench. A Beast on the bench is all that stands between a knock-out and losing (§7).
 local function playBasic(match, playerIndex)
 	for _, card in ipairs(hand(match, playerIndex)) do
 		local params = { card = card.id }
@@ -86,8 +61,8 @@ local function playBasic(match, playerIndex)
 	return nil
 end
 
---- Evolves whatever can be evolved. A later stage is strictly better than what it replaces, and
---- StackCard carries the energy and the damage up with it, so there is never a reason to wait.
+--- Evolves whatever can be evolved. A later stage is strictly better and StackCard carries energy
+--- and damage up with it.
 local function evolve(match, playerIndex)
 	local beasts = Beastbound.GetBeastsInPlay(match, playerIndex)
 
@@ -104,8 +79,7 @@ local function evolve(match, playerIndex)
 	return nil
 end
 
---- Feeds the Active Beast, since that is the one that has to pay for an attack. Only one attachment
---- is allowed a turn (§5), so there is no point spreading it around.
+--- Feeds the Active Beast, which pays for attacks. Only one attachment is allowed a turn (§5).
 local function attachEnergy(match, playerIndex)
 	local active = match:GetZoneSlot("Active", playerIndex, 1)
 
@@ -124,15 +98,9 @@ local function attachEnergy(match, playerIndex)
 	return nil
 end
 
---- The cards the AI has already tried to play this turn, per match.
----
---- A card whose effect turns out to have no legal target stays in hand on purpose, so that a player
---- is not punished for trying (sh_actions.lua, PlayItem). That is right for a person, who will then
---- try something else, and a trap for a loop: the card is still there, still looks playable, and
---- would be picked again forever. Remembering what has already been tried is what closes it.
----
---- Kept out of the match, because it is bookkeeping about the AI rather than part of the game and
---- must not be rolled back with the board. Weak keys, so it goes when the match does.
+--- The cards the AI has already tried to play this turn. A card with no legal target stays in hand
+--- on purpose (sh_actions.lua, PlayItem), so a loop would pick it forever without this. Kept out of
+--- the match since it is AI bookkeeping and mustn't roll back; weak keys, so it goes with the match.
 --- @type table<CardEngine.Match, { turn: number, cards: table<number, boolean> }>
 local triedThisTurn = setmetatable({}, { __mode = "k" })
 
@@ -150,10 +118,8 @@ local function triedCards(match)
 	return tried.cards
 end
 
---- Plays Items and Supporters, aimed at the healthiest Beast when they ask for one.
----
---- What a card actually does is its own business: most of them prompt for their target while they
---- resolve, which AnswerPrompt below deals with. This only decides that playing one is worth a step.
+--- Plays Items and Supporters. What a card does is its own business (most prompt for a target,
+--- which AnswerPrompt handles); this only decides that playing one is worth a step.
 local function playCard(match, playerIndex)
 	local target = healthiest(match, Beastbound.GetBeastsInPlay(match, playerIndex))
 	local tried = triedCards(match)
@@ -161,8 +127,7 @@ local function playCard(match, playerIndex)
 	for _, actionName in ipairs({ "PlayItem", "PlaySupporter" }) do
 		for _, card in ipairs(hand(match, playerIndex)) do
 			if (not tried[card.id]) then
-				-- An equipment wants a Beast to go on and a consumable does not. Trying one and
-				-- falling back to the other costs a refused check and saves knowing which is which.
+				-- Equipment wants a Beast to go on and a consumable doesn't. Trying both costs a refused check.
 				local candidates = {
 					{ card = card.id, target = target and target.id },
 					{ card = card.id },
@@ -182,10 +147,8 @@ local function playCard(match, playerIndex)
 	return nil
 end
 
---- Retreats a nearly-dead Active Beast behind a healthier one.
----
---- Only when it is about to be knocked out anyway: retreating costs energy that would otherwise have
---- paid for an attack, so it is a last resort rather than a habit.
+--- Retreats a nearly-dead Active Beast behind a healthier one. A last resort, since retreating
+--- costs energy that would pay for an attack.
 local function retreat(match, playerIndex)
 	local active = match:GetZoneSlot("Active", playerIndex, 1)
 
@@ -215,11 +178,8 @@ local function retreat(match, playerIndex)
 	return "Retreat", params
 end
 
---- Attacks with the hardest-hitting attack the Active Beast can pay for.
----
---- Printed damage, rather than what would actually land: weakness, resistance and whatever the
---- attack itself does are worked out while it resolves, and guessing at them here would be a second
---- copy of the combat rules that could disagree with the first.
+--- Attacks with the hardest-hitting attack the Active Beast can pay for, by printed damage. Working
+--- out weakness and effects here would be a second copy of the combat rules.
 local function attack(match, playerIndex)
 	local active = match:GetZoneSlot("Active", playerIndex, 1)
 
@@ -255,10 +215,8 @@ local function endTurn(match, playerIndex)
 	return "EndTurn", {}
 end
 
---- Everything the AI knows how to do, in the order it prefers to do it.
----
---- Building the board comes before using it, and the two moves that hand the turn over come last:
---- an attack ends the turn whatever happens (§5), so attacking early would throw the rest away.
+--- Everything the AI knows how to do, in preference order. Attacking ends the turn (§5), so it
+--- comes after building the board.
 local STEPS = {
 	playBasic,
 	evolve,
@@ -269,20 +227,13 @@ local STEPS = {
 	endTurn,
 }
 
---[[
-	Answering questions
---]]
-
---- The prompts Beastbound puts to a player that are worth having an opinion about. Anything not
---- here falls through to Card Engine's own answer, which is what a player out of time would get.
+--- The prompts worth having an opinion about. Anything else gets Card Engine's own answer.
 local PROMPT_ANSWERS = {
-	-- Which Beast to open with, and which to send out when the Active one is knocked out. The same
-	-- question either way: whichever of them can take the most punishment.
+	-- Which Beast to open with or send out: whichever can take the most punishment
 	ce_expansion_beastbound_prompt_choose_active = "healthiest",
 	ce_expansion_beastbound_prompt_promote = "healthiest",
 
-	-- How many Beasts to start on the bench. As many as it is allowed: an empty bench is how this
-	-- game is lost (§7), and a full one costs nothing.
+	-- As many as allowed: an empty bench is how this game is lost (§7)
 	ce_expansion_beastbound_prompt_choose_bench = "all",
 }
 
@@ -305,8 +256,7 @@ end
 --- @param request CardEngine.MatchPromptRequest
 --- @return number? # The instance ID chosen
 local function answerHealthiest(match, request)
-	-- Answering a question that wants several with a single instance would be refused, and none of
-	-- the questions this is used for asks for more than one. Leave anything else to the default.
+	-- A single instance would be refused for a question wanting several, and none of these ask for more
 	if ((request.max or 1) > 1) then
 		return nil
 	end
@@ -326,14 +276,7 @@ local function answerHealthiest(match, request)
 	return chosen and chosen.id or nil
 end
 
---[[
-	Registration
---]]
-
---- Registers the practice opponent with Card Engine.
----
---- Called from sh_init.lua once every file in rules/ has loaded, for the same reason the rules
---- themselves are: so it does not depend on the order the folder happens to be read in.
+--- Registers the practice opponent. Called from sh_init.lua once every file in rules/ has loaded.
 --- @realm server
 function Beastbound.RegisterAI()
 	CardEngine.MatchAI.Register(Beastbound.EXPANSION_SET_ID, {
@@ -352,8 +295,7 @@ function Beastbound.RegisterAI()
 				end
 			end
 
-			-- Nothing it knows how to do. Card Engine picks at random out of whatever is legal,
-			-- which is a worse turn than this file would have played but is still a turn.
+			-- Nothing it knows how to do: Card Engine picks at random from what is legal
 			return nil, nil
 		end,
 

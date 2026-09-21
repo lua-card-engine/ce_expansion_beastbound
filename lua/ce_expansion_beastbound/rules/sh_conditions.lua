@@ -1,12 +1,6 @@
---[[
-	Special Conditions
-
-	See game-rules.md §6. A Beast can have only one of these at a time, and a new one replaces the
-	old, except Poisoned and Burned which do damage between turns and sit alongside a non-damage
-	condition rather than replacing it.
-
-	So a Beast carries at most three: Poisoned, Burned, and one of the others.
---]]
+-- Special Conditions (game-rules.md §6). A Beast has one of the non-damage conditions at a time and
+-- a new one replaces it. Poisoned and Burned do damage between turns and sit alongside it, so a
+-- Beast carries at most three.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
@@ -101,10 +95,8 @@ function Beastbound.IsPreventedBy(match, instanceOrID, what)
 	return false, nil
 end
 
---- Puts a condition on a Beast.
----
---- A damaging condition takes its own slot, so Poison and Burn can each sit alongside an Asleep or
---- a Paralyzed. Anything else replaces whatever non-damage condition was there.
+--- Puts a condition on a Beast. A damaging condition takes its own slot; anything else replaces the
+--- non-damage condition already there.
 --- @param match CardEngine.Match
 --- @param instanceOrID CardEngine.MatchCardInstance|number
 --- @param condition string
@@ -116,7 +108,7 @@ function Beastbound.ApplyCondition(match, instanceOrID, condition)
 		return false
 	end
 
-	-- Conditions only mean anything for a Beast that is out fighting. A benched Beast is safe.
+	-- A benched Beast is safe
 	if (instance.zone ~= "Active") then
 		return false
 	end
@@ -185,11 +177,8 @@ function Beastbound.TransferConditions(match, fromOrID, toOrID)
 	return #conditions
 end
 
---- Deals the damage that Poison and Burn do between turns, then flips to see whether Burn wears
---- off. Poison lasts until something cures it.
----
---- Called for every Active Beast in the Between Turns step, so both players' Beasts take their
---- damage on the same pass.
+--- Deals the damage Poison and Burn do between turns, then flips to see whether Burn wears off.
+--- Called for every Active Beast in the Between Turns step.
 --- @param match CardEngine.Match
 --- @param instanceOrID CardEngine.MatchCardInstance|number
 function Beastbound.ResolveBetweenTurnsDamage(match, instanceOrID)
@@ -199,8 +188,7 @@ function Beastbound.ResolveBetweenTurnsDamage(match, instanceOrID)
 		return
 	end
 
-	-- A fixed order, rather than pairs(), so a Beast that is both poisoned and burned always takes
-	-- its damage the same way round and the match stays reproducible from its seed
+	-- A fixed order rather than pairs(), so the match stays reproducible from its seed
 	for _, condition in ipairs({ "Burned", "Poisoned" }) do
 		if (Beastbound.IsKnockedOut(match, instance)) then
 			return
@@ -245,9 +233,8 @@ function Beastbound.ResolveTurnStartRecovery(match, instanceOrID)
 		end
 	end
 
-	-- Paralysis costs its controller one turn. It is applied during the opponent's turn, so it is
-	-- still in force at the start of the controller's next turn (which it takes away), and clears
-	-- at the start of the turn after that.
+	-- Paralysis is applied during the opponent's turn, so it is still in force at the start of the
+	-- controller's next turn (which it takes away) and clears at the start of the one after
 	if (Beastbound.HasCondition(match, instance, "Paralyzed")) then
 		if (match:GetInstanceState(instance, "paralyzedSince")) then
 			Beastbound.CureCondition(match, instance, "Paralyzed")

@@ -1,14 +1,6 @@
---[[
-	Lasting effects
-
-	The things a card does that outlive the moment it was played: a Beast that takes less damage
-	during the opponent's next turn, a Retreat Cost that has gone up, a piece of equipment that keeps
-	helping for as long as it stays attached.
-
-	These are registered rather than written inline so that both the server and the client can fold
-	them. That is what lets the board grey out a retreat the player can no longer afford without
-	asking the server first, and it is why an effect is pure data: a name and some arguments.
---]]
+-- What a card does that outlives the moment it was played. Registered rather than inline so the
+-- server and client can both fold them, which is how the board greys out a retreat the player can
+-- no longer afford without asking the server. An effect is pure data: a name and some arguments.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 

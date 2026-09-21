@@ -1,10 +1,5 @@
---[[
-	Damage, healing, energy and Knock Outs
-
-	The parts of the rules that cards reach for constantly. Everything here goes through the engine's
-	own mutation API rather than writing to instances directly, so each change becomes an event the
-	board can animate and the log can describe.
---]]
+-- Damage, healing, energy and Knock Outs, all through the engine's mutation API so each change
+-- becomes an event the board can animate.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
@@ -21,10 +16,6 @@ Beastbound.PRIZE_COUNT = 6
 
 --- How many cards a player opens with (game-rules.md §4)
 Beastbound.OPENING_HAND_SIZE = 7
-
---[[
-	Reading a Beast
---]]
 
 --- Whether a card is a Beast
 --- @param card CardEngine.Card?
@@ -82,10 +73,6 @@ function Beastbound.GetAttacks(match, instanceOrID)
 	return match:GetInstanceAttribute(instanceOrID, "Attacks", {})
 end
 
---[[
-	Energy
---]]
-
 --- Whether a card is an Energy card
 --- @param card CardEngine.Card?
 --- @return boolean
@@ -93,10 +80,8 @@ function Beastbound.IsEnergy(card)
 	return card ~= nil and card:GetAttribute("Supertype") == "Energy"
 end
 
---- The energy attached to a Beast, optionally only of one type.
----
---- This set has no colourless energy: an attack is paid for in the attacking Beast's own type, so
---- energy of the wrong type sits there doing nothing but still counts towards a retreat.
+--- The energy attached to a Beast, optionally only of one type. There is no colourless energy: an
+--- attack is paid in the Beast's own type, so other energy only counts towards a retreat.
 --- @param match CardEngine.Match
 --- @param instanceOrID CardEngine.MatchCardInstance|number
 --- @param energyType string? Only count energy of this type
@@ -151,15 +136,9 @@ function Beastbound.GetRetreatCost(match, instanceOrID)
 	return math.max(0, math.floor(cost))
 end
 
---[[
-	Damage and healing
---]]
-
---- Deals damage to a Beast, and Knocks it Out if that is enough.
----
---- The three steps of §2 happen here in order, and then anything in force gets its say through the
---- IncomingDamage query, which is how Turtitan's Fortress Guard holds damage back and how Runic
---- Sword adds to it.
+--- Deals damage to a Beast, and Knocks it Out if that is enough. The three steps of §2 happen in
+--- order, then anything in force applies through the IncomingDamage query (Fortress Guard, Runic
+--- Sword).
 --- @param match CardEngine.Match
 --- @param instanceOrID CardEngine.MatchCardInstance|number The Beast taking the damage
 --- @param amount number The damage before weakness, resistance and effects
@@ -242,14 +221,8 @@ function Beastbound.Heal(match, instanceOrID, amount)
 	return healed
 end
 
---[[
-	Knock Outs
---]]
-
---- Knocks a Beast out: it and everything on it go to the discard, and its opponent takes a prize.
----
---- Promoting a replacement is deliberately left to CheckKnockOuts, so that a player who loses their
---- Active Beast and a benched one in the same attack is only asked to promote once.
+--- Knocks a Beast out: it and everything on it go to the discard and the opponent takes a prize.
+--- Promotion is left to CheckKnockOuts, so a player who loses two Beasts to one attack is asked once.
 --- @param match CardEngine.Match
 --- @param instanceOrID CardEngine.MatchCardInstance|number
 function Beastbound.KnockOut(match, instanceOrID)
@@ -300,10 +273,8 @@ function Beastbound.TakePrize(match, playerIndex)
 	return true
 end
 
---- Knocks out every Beast that has taken enough damage, then makes sure both players still have an
---- Active Beast, asking them to promote one from their bench if they do not.
----
---- Runs inside an action's coroutine, since promoting may need to ask.
+--- Knocks out every Beast with enough damage, then makes sure both players have an Active Beast.
+--- Runs in an action's coroutine, since promoting may ask.
 --- @param match CardEngine.Match
 function Beastbound.CheckKnockOuts(match)
 	local knockedOut = {}
@@ -322,24 +293,21 @@ function Beastbound.CheckKnockOuts(match)
 		return
 	end
 
-	-- The blow that did it is seen landing before the Beast leaves
+	-- The blow is seen landing before the Beast leaves
 	match:Beat()
 
 	for _, instance in ipairs(knockedOut) do
 		Beastbound.KnockOut(match, instance)
 	end
 
-	-- The player who lost their Active Beast promotes first, but both are checked: an attack can
-	-- knock out a Beast on either side of the table
+	-- Both sides are checked: an attack can knock out a Beast on either side
 	for playerIndex = 1, match:GetPlayerCount() do
 		Beastbound.PromoteIfNeeded(match, playerIndex)
 	end
 end
 
---- Makes sure a player has an Active Beast, moving one up from the bench if they do not.
----
---- A player with an empty bench and no Active Beast has lost, but that is for CheckGameOver to
---- notice rather than for this to decide.
+--- Makes sure a player has an Active Beast, moving one up from the bench. An empty bench is for
+--- CheckGameOver to notice.
 --- @param match CardEngine.Match
 --- @param playerIndex number
 --- @return boolean # Whether they have an Active Beast now
@@ -388,7 +356,7 @@ function Beastbound.MoveToActive(match, instanceOrID)
 	})
 end
 
---- Swaps the Active Beast with one from the bench. Conditions do not follow a Beast off the Active
+--- Swaps the Active Beast with one from the bench. Conditions don't follow a Beast off the Active
 --- spot, so retreating shakes them off.
 --- @param match CardEngine.Match
 --- @param benchedOrID CardEngine.MatchCardInstance|number The Beast coming up from the bench

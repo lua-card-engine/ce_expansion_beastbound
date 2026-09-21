@@ -1,9 +1,5 @@
---[[
-	Types, weakness, resistance and the damage formula
-
-	See game-rules.md §2. Every type has exactly one weakness and exactly one resistance, so both
-	boxes on a card are always filled in.
---]]
+-- Types, weakness, resistance and the damage formula (game-rules.md §2). Every type has exactly one
+-- weakness and one resistance.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
@@ -94,11 +90,9 @@ function Beastbound.Resists(attackingType, defendingType)
 	return Beastbound.RESISTANCE[defendingType] == attackingType
 end
 
---- Works out how much damage an attack actually does, applying the three steps of §2 in order:
---- the printed damage, then doubled for weakness, then 20 less for resistance, never below zero.
----
---- Weakness doubles the damage *before* resistance is subtracted, which matters: a 30-damage
---- attack into a Beast that is both weak and resistant does 40, not 20.
+--- Works out how much damage an attack does: the printed damage, doubled for weakness, then 20 less
+--- for resistance, never below zero. Weakness applies before resistance, so a 30-damage attack into
+--- a Beast both weak and resistant does 40, not 20.
 --- @param baseDamage number The attack's printed damage
 --- @param attackingType string? The attacking Beast's type
 --- @param defendingType string? The defending Beast's type
@@ -110,8 +104,7 @@ function Beastbound.CalculateDamage(baseDamage, attackingType, defendingType)
 	local wasWeak = false
 	local wasResisted = false
 
-	-- An attack that does no damage at all stays at nothing: weakness does not turn 0 into 0, and
-	-- resistance should not be reported on an attack that was never going to hurt
+	-- An attack that does no damage stays at nothing, and resistance isn't reported on it
 	if (damage <= 0) then
 		return 0, false, false
 	end

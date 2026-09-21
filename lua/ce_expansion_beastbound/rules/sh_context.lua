@@ -1,19 +1,7 @@
---[[
-	The card script context
-
-	This is what a card's own code is handed, and it is deliberately the only thing it needs. A card
-	file should read close to its printed rules text:
-
-		-- "Flip a coin. If heads, the Defending Beast is now Burned."
-		function(ctx)
-			if (ctx:FlipCoin() == 1) then
-				ctx:ApplyCondition(ctx.defender, "Burned")
-			end
-		end
-
-	Everything here runs on the server inside the action's coroutine, so anything that asks the
-	player a question simply blocks until they answer.
---]]
+-- What a card's script is handed, so it reads close to its printed text:
+--   -- "Flip a coin. If heads, the Defending Beast is now Burned."
+--   function(ctx) if (ctx:FlipCoin() == 1) then ctx:ApplyCondition(ctx.defender, "Burned") end end
+-- Runs on the server inside the action's coroutine, so asking the player something just blocks.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
@@ -55,10 +43,6 @@ function Beastbound.BuildContext(match, playerIndex, source, extra)
 	return context
 end
 
---[[
-	Chance
---]]
-
 --- Flips one or more coins, and shows the player the result
 --- @param count number? How many coins (default: 1)
 --- @param label string? A language key saying what the flip is for
@@ -74,10 +58,6 @@ end
 function CONTEXT:FlipHeads(label)
 	return self:FlipCoin(1, label) == 1
 end
-
---[[
-	Finding Beasts
---]]
 
 --- The Beasts the player has in play, the Active one first
 --- @return CardEngine.MatchCardInstance[]
@@ -124,10 +104,6 @@ function CONTEXT:CountBenchOfType(beastType)
 	return count
 end
 
---[[
-	Asking the player
---]]
-
 --- Asks the player to pick from some Beasts or cards
 --- @param candidates CardEngine.MatchCardInstance[] What they may pick from
 --- @param promptKey string A language key asking the question
@@ -162,12 +138,8 @@ function CONTEXT:Confirm(promptKey)
 	return self.match:PromptConfirm(self.player, promptKey)
 end
 
---[[
-	Damage and healing
---]]
-
---- Deals damage to a Beast, without weakness or resistance. Use this for the extra damage a card
---- deals beyond its attack, such as damage to a benched Beast or to itself.
+--- Deals damage to a Beast without weakness or resistance, for extra damage beyond an attack's own
+--- (a benched Beast, or itself).
 --- @param target CardEngine.MatchCardInstance|number
 --- @param amount number
 --- @return number # The damage that landed
@@ -231,10 +203,6 @@ function CONTEXT:GetDamageOn(target)
 	return Beastbound.GetDamage(self.match, target)
 end
 
---[[
-	Conditions
---]]
-
 --- Puts a Special Condition on a Beast
 --- @param target CardEngine.MatchCardInstance|number
 --- @param condition string One of Paralyzed, Confused, Asleep, Poisoned, Burned
@@ -266,10 +234,6 @@ function CONTEXT:TransferConditions(from, to)
 	return Beastbound.TransferConditions(self.match, from, to)
 end
 
---[[
-	Energy
---]]
-
 --- How much energy is attached to a Beast, optionally only of one type
 --- @param target CardEngine.MatchCardInstance|number
 --- @param energyType string?
@@ -278,9 +242,8 @@ function CONTEXT:CountEnergy(target, energyType)
 	return Beastbound.CountEnergy(self.match, target, energyType)
 end
 
---- Discards energy from a Beast, asking the player which if there is a choice.
----
---- Several attacks offer this as an optional extra cost, so it returns whether it could be paid.
+--- Discards energy from a Beast, asking the player which when there is a choice. Returns whether it
+--- could be paid, since several attacks offer this as an optional extra cost.
 --- @param target CardEngine.MatchCardInstance|number
 --- @param count number How much energy to discard
 --- @param energyType string? Only energy of this type counts
@@ -311,10 +274,6 @@ end
 function CONTEXT:AttachEnergy(energy, target)
 	CardEngine.Match.AttachCard(self.match, energy, target)
 end
-
---[[
-	Deck, hand and discard
---]]
 
 --- Draws cards into the player's hand
 --- @param count number
@@ -367,10 +326,8 @@ function CONTEXT:ShuffleDeck()
 	CardEngine.Match.ShuffleZone(self.match, "Deck", self.player)
 end
 
---- Searches the player's deck for cards matching some attributes and lets them pick.
----
---- The deck is a hidden zone, so the prompt is shown only to the player searching it: the opponent
---- is told a search happened, never what was in there.
+--- Searches the player's deck for cards matching some attributes and lets them pick. The prompt is
+--- shown only to the searcher; the opponent is told a search happened, never what was in there.
 --- @param attributes table<string, any>? What the card has to be, e.g. { Supertype = "Energy" }
 --- @param count number? How many to find (default: 1)
 --- @param promptKey string?
@@ -424,12 +381,7 @@ function CONTEXT:MoveCard(instance, zoneKey, options)
 	CardEngine.Match.MoveCard(self.match, instance, zoneKey, self.player, options)
 end
 
---[[
-	Lasting effects
---]]
-
---- Puts an effect in force until the end of the opponent's next turn, which is how almost every
---- "during your opponent's next turn" card is written.
+--- Puts an effect in force until the end of the opponent's next turn ("during your opponent's next turn")
 --- @param effectName string The registered effect to apply
 --- @param args table? Arguments for it, such as how much damage it holds back
 --- @param target CardEngine.MatchCardInstance|number|nil What it applies to (default: the source)
@@ -446,8 +398,7 @@ function CONTEXT:AddEffectUntilOpponentTurnEnds(effectName, args, target)
 	})
 end
 
---- Puts an effect in force until the end of the player's own next turn, for the cards that hold
---- themselves back rather than the opponent
+--- Puts an effect in force until the end of the player's own next turn
 --- @param effectName string
 --- @param args table?
 --- @param target CardEngine.MatchCardInstance|number|nil
@@ -464,7 +415,7 @@ function CONTEXT:AddEffectUntilOwnTurnEnds(effectName, args, target)
 	})
 end
 
---- Puts an effect in force for as long as the card stays where it is, which is what equipment wants
+--- Puts an effect in force for as long as the card stays where it is (equipment)
 --- @param effectName string
 --- @param args table?
 --- @param target CardEngine.MatchCardInstance|number
@@ -479,10 +430,6 @@ function CONTEXT:AddLastingEffect(effectName, args, target)
 		target = instance and instance.id or nil,
 	})
 end
-
---[[
-	Odds and ends
---]]
 
 --- Writes a line in the match log
 --- @param languageKey string

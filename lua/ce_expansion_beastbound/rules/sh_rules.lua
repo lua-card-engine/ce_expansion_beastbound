@@ -1,17 +1,9 @@
---[[
-	The rules of Beastbound
-
-	Setup, turn structure, attacks, evolution and win conditions, following game-rules.md §4 to §7.
-	The per-card effects live in the card files themselves, in CARD.GameRules.
---]]
+-- Setup, turn structure, attacks, evolution and win conditions, following game-rules.md §4 to §7.
+-- Per-card effects live in the card files, in CARD.GameRules.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
 local Beastbound = CardEngine.ExpansionSets.Beastbound
-
---[[
-	Evolution (§5)
---]]
 
 --- Whether a card in hand may be used to evolve a Beast in play
 --- @param match CardEngine.Match
@@ -20,8 +12,7 @@ local Beastbound = CardEngine.ExpansionSets.Beastbound
 --- @return boolean legal
 --- @return string? reason
 function Beastbound.CanEvolve(match, card, target)
-	-- The client does not know what is in an opponent's hand, so it cannot rule this out. The
-	-- server always can, and it is the server's answer that counts.
+	-- The client can't see an opponent's hand, so it can't rule this out; the server can
 	if (not card) then
 		return true
 	end
@@ -58,10 +49,8 @@ function Beastbound.CanEvolve(match, card, target)
 	return true
 end
 
---- Evolves a Beast by putting the next stage on top of it.
----
---- The engine's StackCard carries the energy, the equipment and the damage up to the new stage,
---- which is what the rules expect. Conditions are shaken off, since the Beast has changed.
+--- Evolves a Beast by putting the next stage on top. StackCard carries energy, equipment and damage
+--- up to the new stage; conditions are shaken off.
 --- @param match CardEngine.Match
 --- @param instanceOrID CardEngine.MatchCardInstance|number The card from hand
 --- @param targetOrID CardEngine.MatchCardInstance|number The Beast in play
@@ -96,10 +85,6 @@ function Beastbound.Evolve(match, instanceOrID, targetOrID)
 	return true
 end
 
---[[
-	Attacking (§5)
---]]
-
 --- Carries out an attack: the confusion check, the damage, then whatever the attack itself does.
 --- Attacking ends the turn, whatever happens.
 --- @param match CardEngine.Match
@@ -125,8 +110,7 @@ function Beastbound.ResolveAttack(match, playerIndex, attackIndex)
 		attack = attack.Name,
 	})
 
-	-- Confusion is checked before anything else: on a tails the attack does nothing at all and the
-	-- attacker hurts itself instead (§6)
+	-- Confusion is checked first: on tails the attack does nothing and the attacker hurts itself (§6)
 	if (Beastbound.HasCondition(match, attacker, "Confused")) then
 		if (match:FlipCoin(1, "ce_expansion_beastbound_flip_confusion", attacker) ~= 1) then
 			Beastbound.DealDamage(match, attacker, 20, {
@@ -151,8 +135,8 @@ function Beastbound.ResolveAttack(match, playerIndex, attackIndex)
 	local entry = card and card.GameRules and card.GameRules.Attacks and card.GameRules.Attacks[attackIndex]
 	local damage = attack.Damage or 0
 
-	-- An attack whose damage depends on something ("does 20 more if...") says so with ModifyDamage,
-	-- which runs before the damage lands. Everything else is an effect that happens after it.
+	-- An attack whose damage depends on something says so with ModifyDamage, which runs before the
+	-- damage lands. Everything else is an effect that happens after it.
 	if (istable(entry) and isfunction(entry.ModifyDamage)) then
 		damage = entry.ModifyDamage(context, damage) or 0
 	end
@@ -175,8 +159,7 @@ function Beastbound.ResolveAttack(match, playerIndex, attackIndex)
 
 	local onResolve = isfunction(entry) and entry or (istable(entry) and entry.OnResolve)
 
-	-- A defender can be shielded from what an attack *does* without being shielded from its damage,
-	-- which is what Genitron's Djinn Ward is. The damage above has already landed either way.
+	-- A defender can be shielded from what an attack does but not its damage (Genitron's Djinn Ward)
 	local effectsApply = match:Query("AttackEffectsApply", {
 		match = match,
 		instance = defender,
@@ -192,10 +175,6 @@ function Beastbound.ResolveAttack(match, playerIndex, attackIndex)
 	Beastbound.EndTurn(match, playerIndex)
 end
 
---[[
-	Turns (§5)
---]]
-
 --- Ends a player's turn: resolves the Between Turns step, then hands over.
 --- @param match CardEngine.Match
 --- @param playerIndex number
@@ -204,7 +183,7 @@ function Beastbound.EndTurn(match, playerIndex)
 		return
 	end
 
-	-- The turn plays out on the board before anything between turns happens to it
+	-- The turn plays out on the board before anything between turns happens
 	match:Beat()
 
 	-- Between turns, Poison and Burn do their damage to whoever is out front (§5.4)
@@ -261,10 +240,8 @@ end
 	Setup (§4)
 --]]
 
---- Deals a player an opening hand, mulliganing until they have a Basic Beast.
----
---- Each mulligan lets the opponent draw one extra card once the dust settles, so the count comes
---- back rather than being dealt out here.
+--- Deals a player an opening hand, mulliganing until they have a Basic Beast. The mulligan count is
+--- returned, since each lets the opponent draw an extra card.
 --- @param match CardEngine.Match
 --- @param playerIndex number
 --- @return number # How many times they had to mulligan
@@ -287,7 +264,7 @@ local function dealOpeningHand(match, playerIndex)
 			break
 		end
 
-		-- No Basic Beast means no way to start, so the hand goes back and they try again
+		-- No Basic Beast means no way to start, so the hand goes back
 		for _, instance in ipairs(match:GetZoneInstances("Hand", playerIndex)) do
 			CardEngine.Match.MoveCard(match, instance, "Deck", playerIndex, { faceDown = true })
 		end
@@ -302,8 +279,7 @@ local function dealOpeningHand(match, playerIndex)
 			count = mulligans,
 		})
 
-		-- A deck of 60 with at least one Basic Beast cannot really loop forever, but a deck built
-		-- by some future card pool might, and a match that never starts is worse than an odd hand
+		-- Guards against a future card pool that would loop forever; an odd hand beats a match that never starts
 		if (mulligans >= 10) then
 			break
 		end
@@ -413,14 +389,8 @@ function Beastbound.SetupMatch(match)
 	Beastbound.StartTurn(match, match.activePlayer)
 end
 
---[[
-	Winning (§7)
---]]
-
---- Works out whether anybody has won yet.
----
---- All three conditions of §7 are about something happening to a player, so this looks for a player
---- who has lost and declares their opponent the winner.
+--- Works out whether anybody has won. All three conditions of §7 are about something happening to a
+--- player, so this looks for a player who has lost and declares their opponent the winner.
 --- @param match CardEngine.Match
 --- @return number? winner
 --- @return string? reason
@@ -453,14 +423,7 @@ function Beastbound.CheckGameOver(match)
 	return nil, nil
 end
 
---[[
-	Registration
---]]
-
---- Registers the rules with Card Engine.
----
---- Called from sh_init.lua once every file in rules/ has loaded, rather than at load time, so this
---- does not depend on the order the folder happens to be read in.
+--- Registers the rules with Card Engine. Called from sh_init.lua once every file in rules/ has loaded.
 function Beastbound.RegisterGameRules()
 	CardEngine.GameRules.Register({
 		ExpansionSet = Beastbound.EXPANSION_SET_ID,

@@ -27,8 +27,7 @@ hook.Add(
 				},
 			},
 
-			-- The rules decks built from this set must follow (see game-rules.md, "Deck construction").
-			-- Card Engine uses these in the Decks tab, and to validate decks on the server.
+			-- The rules decks built from this set must follow (see game-rules.md, "Deck construction")
 			DeckRules = {
 				MinCards = 60,
 				MaxCards = 60,
@@ -100,15 +99,13 @@ hook.Add(
 
 		CardEngine.Language.IncludeDirectory(CardEngine.PathCombine("ce_expansion_beastbound", "languages/"))
 
-		-- The rules of the game itself: zones, turns, actions, conditions and how it is presented.
-		-- Registration is deferred until every file in here has loaded, so it does not matter which
-		-- order the folder is read in.
+		-- The rules of the game: zones, turns, actions, conditions and presentation. Registration is deferred
+		-- until every file has loaded, so folder order doesn't matter.
 		CardEngine.IncludeDirectory(CardEngine.PathCombine("ce_expansion_beastbound", "rules/"))
 
 		CardEngine.ExpansionSets.Beastbound.RegisterGameRules()
 
-		-- The practice opponent, so the game can be played without finding a second person.
-		-- Server only: it reads the match itself rather than a filtered view of it.
+		-- The practice opponent. Server only: it reads the match itself rather than a filtered view.
 		if (SERVER) then
 			CardEngine.ExpansionSets.Beastbound.RegisterAI()
 		end

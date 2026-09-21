@@ -1,14 +1,6 @@
---[[
-	Beastbound's animations
-
-	Kept apart from the rest of the presentation because they are the bulk of it, and because they
-	are the part with a contract: a presenter is handed the board, the event, and a function to call
-	when it has finished. Until it calls that, the next event waits, which is what makes a coin land
-	before the damage it caused does.
-
-	None of this decides anything. The server resolved the flip long before the coin was drawn; this
-	only shows the player what already happened.
---]]
+-- Beastbound's animations, kept apart because they are the bulk of the presentation and the part
+-- with a contract: a presenter is handed the board, the event and a function to call when done.
+-- Until it does, the next event waits, so a coin lands before the damage it caused.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
@@ -31,10 +23,6 @@ local COIN_HOLD_TIME = 0.6
 --- How long a damage number floats for
 local DAMAGE_FLOAT_TIME = 0.9
 
---[[
-	Helpers
---]]
-
 --- Finds the panel showing a card instance, so an animation can happen where the card is
 --- @param board Panel
 --- @param instanceID number?
@@ -56,13 +44,6 @@ local function findCardPanel(board, instanceID)
 
 	return nil
 end
-
---[[
-	The coin flip
-
-	The one animation the set really needs: a player should see a coin land on heads or tails, not
-	read the number 1 or 2 in a log.
---]]
 
 --- @param board Panel
 --- @param results number[] Each flip, where 1 is heads and 2 is tails
@@ -89,19 +70,19 @@ local function playCoinFlip(board, results, label, finished)
 		local x = (w - totalWidth) * 0.5
 		local y = h * 0.4
 
-		-- A dim wash, so the coin reads against whatever is behind it
+		-- A dim wash, so the coin reads against what is behind it
 		surface.SetDrawColor(0, 0, 0, math.min(150, elapsed * 400))
 		surface.DrawRect(0, 0, w, h)
 
 		for index = 1, count do
 			local face = results[index]
 
-			-- While it spins, the face shown flickers; once it settles it is the real result
+			-- While it spins the face flickers; once settled it is the real result
 			if (not settled) then
 				face = (math.floor(elapsed * 18) + index) % 2 + 1
 			end
 
-			-- Squash horizontally to suggest a coin turning over
+			-- Squashed sideways to suggest a coin turning over
 			local squash = settled and 1 or math.abs(math.cos(elapsed * 18 + index))
 			local drawWidth = math.max(2, size * squash)
 
@@ -128,8 +109,7 @@ local function playCoinFlip(board, results, label, finished)
 		end
 	end
 
-	-- Whatever happens to the timer, the queue is released exactly once: the presenter contract
-	-- says the board carries on when finished is called, and the watchdog covers the rest
+	-- The queue is released exactly once: by finished, or by the watchdog if that never comes
 	timer.Simple(totalTime, function()
 		if (IsValid(overlay)) then
 			overlay:Remove()
@@ -138,10 +118,6 @@ local function playCoinFlip(board, results, label, finished)
 		finished()
 	end)
 end
-
---[[
-	Damage
---]]
 
 --- Floats a damage number off the Beast that took it
 --- @param board Panel
@@ -191,19 +167,13 @@ local function playDamage(board, event, finished)
 	end)
 end
 
---[[
-	Registration
-
-	Added to the presentation the set already registered, rather than replacing it, since this file
-	loads after cl_presentation.lua.
---]]
+-- Added to the presentation registered by cl_presentation.lua, which loads first
 
 local presentation = CardEngine.GameRules.GetPresentation(Beastbound.EXPANSION_SET_ID)
 
 if (presentation) then
 	presentation.Events = {
-		--- The engine's generic randomness event. Only coins are dressed up; anything else falls
-		--- through to Card Engine's own log line by returning false.
+		--- Only coins are dressed up; anything else returns false and gets Card Engine's own log line
 		random = function(board, event, finished)
 			if (event.method ~= "coin") then
 				return false

@@ -1,10 +1,4 @@
---[[
-	How Beastbound looks
-
-	Card Engine decides what happened; this decides how it is shown. Every section here is optional:
-	take any of it away and the board still works, just plainer. That is the point of the defaults,
-	and it is what another expansion set can rely on while it is being built.
---]]
+-- How Beastbound looks. Every section is optional: take any away and the board still works, plainer.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
@@ -30,10 +24,6 @@ local CONDITION_BADGES = {
 	Poisoned = { text = "PSN", color = Color(120, 190, 90) },
 	Burned = { text = "BRN", color = Color(230, 120, 60) },
 }
-
---[[
-	Overlays drawn on a card in play
---]]
 
 --- Draws the damage on a Beast as a number in the corner
 local function drawDamage(panel, match, instance, w, h)
@@ -121,10 +111,6 @@ local function drawEffects(panel, match, instance, w, h)
 	draw.RoundedBox(3, w - 10, h - 10, 7, 7, COLOR_EFFECT)
 end
 
---[[
-	The log
---]]
-
 --- @param match CardEngine.Match
 --- @param instanceOrID CardEngine.MatchCardInstance|number
 --- @return string
@@ -134,13 +120,8 @@ local function nameOf(match, instanceOrID)
 	return card and card:GetName() or CardEngine.T("ce_expansion_beastbound_log_a_card")
 end
 
---[[
-	Inspecting
---]]
-
---- What is worth saying about a Beast in play that its card does not already say: how hurt it is,
---- what has been done to it, and what it would cost to move it right now. The card itself, at full
---- size, already carries its attacks and its text.
+--- What is worth saying about a Beast in play that its card doesn't: how hurt it is, what has been
+--- done to it and what it would cost to move it right now.
 --- @param match CardEngine.Match
 --- @param instance CardEngine.MatchCardInstance
 --- @return table[]
@@ -183,8 +164,7 @@ local function inspectBeast(match, instance)
 		})
 	end
 
-	-- What it costs now can differ from what is printed, once something in force changes it, and
-	-- that is exactly the kind of thing a player cannot see on the card
+	-- What it costs now can differ from what is printed once something in force changes it
 	local cost = Beastbound.GetRetreatCost(match, instance)
 	local printed = match:GetInstanceAttribute(instance, "RetreatCost", 0)
 
@@ -203,13 +183,8 @@ local function inspectBeast(match, instance)
 	return rows
 end
 
---[[
-	Registration
---]]
-
 CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
-	--- Where each zone sits. The board mirrors this for the opponent, so it is written once from
-	--- the point of view of whoever is looking at it.
+	--- Where each zone sits, written from the viewer's point of view. The board mirrors it for the opponent.
 	Layout = {
 		Battlefield = {
 			{ zone = "Active", style = "slots", cardWidth = 96 },
@@ -246,9 +221,8 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 			"EndTurn",
 		},
 
-		-- How many cards the player picks before the action is sent. Two means "this card, onto
-		-- that one"; one means "just this"; none means it belongs to no card, unless OnCard says
-		-- which card it is offered on.
+		-- How many cards the player picks before the action is sent: two is "this card, onto that one",
+		-- none means it belongs to no card unless OnCard says which
 		AttachEnergy = { Targets = 2 },
 		Evolve = { Targets = 2 },
 		PlayBasic = { Targets = 1 },
@@ -257,9 +231,8 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 		Retreat = { Targets = 1, Label = "ce_expansion_beastbound_action_retreat" },
 		EndTurn = { Targets = 0 },
 
-		-- "Attack" on its own is not a move anybody can make: a Beast has two of them and they do
-		-- different things, so each becomes its own button, named and priced like the card is. They
-		-- are offered on the Active Beast, and greyed out when it cannot pay for them.
+		-- A Beast has two attacks that do different things, so each becomes its own button, named and
+		-- priced like the card, offered on the Active Beast and greyed out when it can't pay
 		Attack = {
 			Targets = 0,
 
@@ -374,8 +347,8 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
-	--- The table itself: a blue cloth, every zone framed in gold and named, and the logo on the line
-	--- between the two players. Face-down cards show the same back the printed cards have.
+	--- The table: a blue cloth, every zone framed in gold and named, and the logo on the dividing line.
+	--- Face-down cards show the same back the printed cards have.
 	Board = {
 		Background = MATERIAL_PATH .. "board_background.jpg",
 		CenterLogo = MATERIAL_PATH .. "board_logo_center.png",

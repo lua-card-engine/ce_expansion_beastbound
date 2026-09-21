@@ -1,22 +1,10 @@
---[[
-	The actions a player can take
-
-	See game-rules.md §5. Each action says when it is legal and what it does. Card Engine checks the
-	turn, the phase and then IsLegal before it will run Perform, and it re-checks all of it on the
-	server no matter what the client believed, so these are the whole of the rules on what a player
-	may do.
-
-	The per-turn limits (one energy, one supporter, one retreat, one attack) live in the player's
-	match state and are cleared at the start of each turn by sh_rules.lua.
---]]
+-- The actions a player can take (game-rules.md §5). Card Engine checks turn, phase and then IsLegal
+-- before running Perform, so these are the whole rules on what a player may do. Per-turn limits
+-- live in the player's match state and are cleared by sh_rules.lua at the start of each turn.
 
 CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
 local Beastbound = CardEngine.ExpansionSets.Beastbound
-
---[[
-	Helpers shared by the actions
---]]
 
 --- The card a player is trying to play, if it really is in their hand
 --- @param match CardEngine.Match
@@ -71,10 +59,8 @@ function Beastbound.GetBeastsInPlay(match, playerIndex)
 	return beasts
 end
 
---- Runs whatever a card says it does, if it says anything at all.
----
---- A card's behaviour lives in CARD.GameRules in its own file, right next to its stats. Most cards
---- have nothing here: an attack with no rules text just does its damage.
+--- Runs whatever a card says it does in CARD.GameRules, if anything. Most cards have nothing: an
+--- attack with no rules text just does its damage.
 --- @param match CardEngine.Match
 --- @param card CardEngine.Card?
 --- @param key string Which part of the card to run, e.g. "OnPlay"
@@ -106,14 +92,7 @@ function Beastbound.RunAttackScript(match, card, attackIndex, context)
 	return attacks[attackIndex](context)
 end
 
---[[
-	The actions
---]]
-
---- Whether a player is holding a card that passes a test.
----
---- What every "is this button worth pressing" check needs: an action that plays a card from hand
---- leads nowhere at all when there is no such card to play.
+--- Whether a player is holding a card that passes a test, for "is this button worth pressing" checks
 --- @param match CardEngine.Match
 --- @param playerIndex number
 --- @param predicate fun(card: CardEngine.Card): boolean
@@ -160,8 +139,7 @@ Beastbound.Actions.AttachEnergy = {
 
 		local instance, card = getHandCard(match, playerIndex, params.card)
 
-		-- The client cannot see the contents of its opponent's hand, so a card it cannot identify
-		-- is treated as "maybe", not as illegal. The server always can, so nothing gets through.
+		-- The client can't see an opponent's hand, so an unidentifiable card is "maybe", not illegal
 		if (not instance) then
 			return false, "ce_expansion_beastbound_card_not_in_hand"
 		end
@@ -232,8 +210,7 @@ Beastbound.Actions.PlayItem = {
 		local context = Beastbound.BuildContext(match, playerIndex, instance)
 		local played = Beastbound.RunCardScript(match, card, "OnPlay", context)
 
-		-- A card that says it could not be played stays in hand, so a player is not punished for
-		-- trying something that turned out to have no legal target
+		-- A card that says it could not be played stays in hand, so trying isn't punished
 		if (played == false) then
 			return
 		end
@@ -490,8 +467,7 @@ Beastbound.Actions.Attack = {
 	Phase = "Action",
 	EndsTurn = true,
 
-	-- Whether attacking is possible at all. Which attack, and whether its cost can be paid, is left
-	-- to IsLegal, so one attack greying out does not take the other with it.
+	-- Which attack, and whether its cost can be paid, is left to IsLegal, so one greying out doesn't take the other
 	IsAvailable = function(match, playerIndex)
 		local active = match:GetZoneSlot("Active", playerIndex, 1)
 
@@ -525,8 +501,7 @@ Beastbound.Actions.Attack = {
 			return false, "ce_expansion_beastbound_no_active_beast"
 		end
 
-		-- The player going first does not get to attack on turn 1 in most games of this shape, but
-		-- Beastbound has no such rule: only conditions and effects can stop an attack
+		-- Only conditions and effects stop an attack; there is no first-turn rule
 		local prevented, condition = Beastbound.IsPreventedBy(match, active, "PreventsAttack")
 
 		if (prevented) then
