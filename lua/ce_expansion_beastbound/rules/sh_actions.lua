@@ -488,6 +488,7 @@ Beastbound.Actions.Retreat = {
 --- Attack with the Active Beast. This ends the turn (§5).
 Beastbound.Actions.Attack = {
 	Phase = "Action",
+	EndsTurn = true,
 
 	-- Whether attacking is possible at all. Which attack, and whether its cost can be paid, is left
 	-- to IsLegal, so one attack greying out does not take the other with it.
@@ -564,6 +565,7 @@ Beastbound.Actions.Attack = {
 --- End your turn without attacking (§5).
 Beastbound.Actions.EndTurn = {
 	Phase = "Action",
+	EndsTurn = true,
 
 	IsLegal = function(match, playerIndex, params)
 		return true

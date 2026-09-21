@@ -19,6 +19,8 @@ return {
 	--]]
 
 	["ce_expansion_beastbound_game_name"] = "Beastbound",
+	["ce_expansion_beastbound_ai_name"] = "Beastbound Trainer",
+	["ce_expansion_beastbound_deck_starter"] = "Starter Deck",
 
 	--[[
 		Special Conditions

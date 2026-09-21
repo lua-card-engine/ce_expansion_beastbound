@@ -12,31 +12,9 @@ CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
 local Beastbound = CardEngine.ExpansionSets.Beastbound
 
---- A legal 60-card deck, weighted so setup always finds a Basic Beast to start with
 --- @return table
 local function buildTestDeck()
-	local cards = {
-		ce_expansion_beastbound_pyrecko = 4,
-		ce_expansion_beastbound_emberaz = 4,
-		ce_expansion_beastbound_infernecko = 4,
-		ce_expansion_beastbound_turtling = 4,
-		ce_expansion_beastbound_turterus = 4,
-		ce_expansion_beastbound_starkrat = 4,
-		ce_expansion_beastbound_chrysaloid = 4,
-		ce_expansion_beastbound_spooklet = 4,
-		ce_expansion_beastbound_minor_potion = 4,
-		ce_expansion_beastbound_jane = 2,
-		ce_expansion_beastbound_shane = 2,
-		ce_expansion_beastbound_fire_energy = 12,
-		ce_expansion_beastbound_nature_energy = 8,
-	}
-
-	return {
-		id = "selftest_deck",
-		name = "Self Test",
-		expansion_set = Beastbound.EXPANSION_SET_ID,
-		cards = cards,
-	}
+	return Beastbound.BuildStarterDeck("selftest_deck")
 end
 
 --- Starts a two-player match between two copies of that deck
@@ -1020,6 +998,68 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 
 			context:Equal("the same seed gives the same rolls", rollsFrom(12345), rollsFrom(12345))
 			context:Check("different seeds differ", rollsFrom(12345) ~= rollsFrom(54321))
+		end,
+	},
+
+	--[[
+		Whole games
+
+		The broadest check there is: two AI seats play Beastbound from the opening hand to somebody
+		winning, with every turn taken, every prompt answered and every card that turns up resolved.
+
+		A scripted test only reaches the board it was written to build. A game reaches the boards
+		nobody thought of, which is where the rules that only go wrong on turn nine live.
+	--]]
+
+	{
+		name = "two AI players can finish a game of Beastbound",
+		run = function(context)
+			local match = context:StartMatch(Beastbound.EXPANSION_SET_ID,
+				{ buildTestDeck(), buildTestDeck() }, nil, true)
+
+			if (not match) then
+				return
+			end
+
+			if (not context:PlayOut(match)) then
+				return
+			end
+
+			local winner, reason = match:GetWinner()
+
+			-- Every way this game can end is somebody winning (§7), so a draw means something
+			-- stopped the match rather than won it
+			context:Check("somebody won", winner ~= nil, "the match ended without a winner")
+			context:Check("and the game said why", reason ~= nil
+				and reason ~= "match_ended"
+				and reason ~= "match_end_ai_stuck",
+				"ended with: " .. tostring(reason))
+		end,
+	},
+
+	{
+		name = "a game plays out the same way from the same seed",
+		run = function(context)
+			--- Plays a whole game and boils it down to something two runs can be compared on
+			--- @param seed number
+			--- @return string
+			local function outcomeFrom(seed)
+				local match = context:StartMatch(Beastbound.EXPANSION_SET_ID,
+					{ buildTestDeck(), buildTestDeck() }, seed, true)
+
+				if (not match) then
+					return "no match"
+				end
+
+				CardEngine.MatchAI.PlayOut(match)
+
+				return string.format("%s/%s/%s",
+					tostring(match:GetWinner()), tostring(match.turn), tostring(match.endReason))
+			end
+
+			-- A match that is reproducible is a match whose bugs can be chased. This is the check
+			-- that says the AI has not smuggled any randomness of its own in alongside the seed.
+			context:Equal("the same seed plays the same game", outcomeFrom(818181), outcomeFrom(818181))
 		end,
 	},
 })

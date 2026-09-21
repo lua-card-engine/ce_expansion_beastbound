@@ -106,5 +106,11 @@ hook.Add(
 		CardEngine.IncludeDirectory(CardEngine.PathCombine("ce_expansion_beastbound", "rules/"))
 
 		CardEngine.ExpansionSets.Beastbound.RegisterGameRules()
+
+		-- The practice opponent, so the game can be played without finding a second person.
+		-- Server only: it reads the match itself rather than a filtered view of it.
+		if (SERVER) then
+			CardEngine.ExpansionSets.Beastbound.RegisterAI()
+		end
 	end
 )
