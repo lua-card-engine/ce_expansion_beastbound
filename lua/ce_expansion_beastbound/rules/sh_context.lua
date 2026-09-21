@@ -133,9 +133,11 @@ end
 --- @param promptKey string A language key asking the question
 --- @param count number? How many to pick (default: 1)
 --- @param optional boolean? Whether they may decline
+--- @param reveal boolean? Whether to show them what the cards are, for choosing from cards they
+---        cannot see, such as the top of their deck. Only they are shown.
 --- @return CardEngine.MatchCardInstance|CardEngine.MatchCardInstance[]|nil
-function CONTEXT:Choose(candidates, promptKey, count, optional)
-	return self.match:PromptInstance(self.player, promptKey, candidates, count or 1, optional)
+function CONTEXT:Choose(candidates, promptKey, count, optional, reveal)
+	return self.match:PromptInstance(self.player, promptKey, candidates, count or 1, optional, reveal)
 end
 
 --- Asks the player to pick one of their own Beasts
@@ -381,7 +383,7 @@ function CONTEXT:SearchDeck(attributes, count, promptKey)
 	end
 
 	local chosen = self.match:PromptInstance(self.player,
-		promptKey or "ce_expansion_beastbound_prompt_search_deck", candidates, count or 1, true)
+		promptKey or "ce_expansion_beastbound_prompt_search_deck", candidates, count or 1, true, true)
 
 	local found = {}
 
@@ -403,7 +405,7 @@ function CONTEXT:PutOnBottomOfDeck(instances, promptKey)
 	end
 
 	local order = self.match:PromptOrder(self.player,
-		promptKey or "ce_expansion_beastbound_prompt_order_bottom", instances)
+		promptKey or "ce_expansion_beastbound_prompt_order_bottom", instances, true)
 
 	-- The first card named goes down first, so it ends up deepest
 	for _, instanceID in ipairs(order) do

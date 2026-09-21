@@ -32,7 +32,7 @@ CARD.GameRules = {
 			return false
 		end
 
-		local kept = ctx:Choose(top, "ce_expansion_beastbound_prompt_tome_of_fate", 1)
+		local kept = ctx:Choose(top, "ce_expansion_beastbound_prompt_tome_of_fate", 1, false, true)
 
 		if (kept) then
 			ctx:MoveCard(kept, "Hand", { faceDown = false })
