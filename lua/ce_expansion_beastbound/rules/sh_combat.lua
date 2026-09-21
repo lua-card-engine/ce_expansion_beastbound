@@ -372,7 +372,11 @@ function Beastbound.MoveToActive(match, instanceOrID)
 		return
 	end
 
-	CardEngine.Match.MoveCard(match, instance, "Active", instance.controller, { slot = 1, faceDown = false })
+	CardEngine.Match.MoveCard(match, instance, "Active", instance.controller, {
+		slot = 1,
+		faceDown = false,
+		keepAttached = true,
+	})
 
 	match:AddEvent({
 		type = "beastbound_promoted",
@@ -400,13 +404,19 @@ function Beastbound.SwapWithActive(match, benchedOrID)
 	if (active) then
 		Beastbound.CureAllConditions(match, active)
 
+		-- Whatever Energy is left after paying the Retreat Cost stays on the Beast (§5)
 		CardEngine.Match.MoveCard(match, active, "Bench", playerIndex, {
 			slot = benchSlot,
 			faceDown = false,
+			keepAttached = true,
 		})
 	end
 
-	CardEngine.Match.MoveCard(match, benched, "Active", playerIndex, { slot = 1, faceDown = false })
+	CardEngine.Match.MoveCard(match, benched, "Active", playerIndex, {
+		slot = 1,
+		faceDown = false,
+		keepAttached = true,
+	})
 
 	match:AddEvent({
 		type = "beastbound_retreated",

@@ -367,6 +367,56 @@ CardEngine.MatchTest.Register(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
+	{
+		name = "a retreating Beast keeps its remaining energy and does not crowd the bench",
+		run = function(context)
+			local match = startTestMatch(context)
+
+			if (not match) then
+				return
+			end
+
+			local playerIndex = match:GetActivePlayerIndex()
+			local opening = match:GetZoneSlot("Active", playerIndex, 1)
+
+			if (opening) then
+				CardEngine.Match.MoveCard(match, opening, "Discard", playerIndex)
+			end
+
+			local active = CardEngine.Match.CreateInstance(match,
+				"ce_expansion_beastbound_turtling", playerIndex, "Active", 1)
+			CardEngine.Match.SetInstanceState(match, active, "playedOnTurn", 0)
+
+			local benched = CardEngine.Match.CreateInstance(match,
+				"ce_expansion_beastbound_starkrat", playerIndex, "Bench")
+			CardEngine.Match.SetInstanceState(match, benched, "playedOnTurn", 0)
+
+			for _ = 1, 3 do
+				local energy = CardEngine.Match.CreateInstance(match,
+					"ce_expansion_beastbound_fire_energy", playerIndex, "Hand")
+				CardEngine.Match.AttachCard(match, energy, active)
+			end
+
+			local benchBefore = #match:GetZoneInstances("Bench", playerIndex)
+
+			context:Run(match, function()
+				Beastbound.Actions.Retreat.Perform(match, playerIndex, { target = benched.id })
+			end)
+
+			-- One energy paid the cost of one; the other two are still the retreated Beast's
+			context:Equal("the energy left over stays attached", Beastbound.CountEnergy(match, active), 2)
+			context:Equal("the retreated Beast is on the bench", active.zone, "Bench")
+
+			for _, attached in ipairs(match:GetAttached(active)) do
+				context:Equal("attached energy follows its Beast to the bench", attached.zone, "Bench")
+			end
+
+			-- Energy is not a Beast, so it must not take a bench slot of its own
+			context:Equal("the bench holds the same number of cards",
+				#match:GetZoneInstances("Bench", playerIndex), benchBefore)
+		end,
+	},
+
 	--[[
 		§5 Knock Outs
 	--]]
