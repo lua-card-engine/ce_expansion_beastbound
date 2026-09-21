@@ -210,7 +210,7 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 			{ zone = "Bench", style = "slots", cardWidth = 64 },
 		},
 		Private = {
-			{ zone = "Hand", style = "row", cardWidth = 72 },
+			{ zone = "Hand", style = "hand", cardWidth = 96 },
 		},
 		Stacks = {
 			{ zone = "Prizes", style = "stack", cardWidth = 48 },
@@ -241,7 +241,8 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 		},
 
 		-- How many cards the player picks before the action is sent. Two means "this card, onto
-		-- that one"; one means "just this"; none means it fires straight away.
+		-- that one"; one means "just this"; none means it belongs to no card, unless OnCard says
+		-- which card it is offered on.
 		AttachEnergy = { Targets = 2 },
 		Evolve = { Targets = 2 },
 		PlayBasic = { Targets = 1 },
@@ -251,10 +252,14 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 		EndTurn = { Targets = 0 },
 
 		-- "Attack" on its own is not a move anybody can make: a Beast has two of them and they do
-		-- different things, so each becomes its own button, named and priced like the card is. The
-		-- board greys out the ones this Beast cannot pay for.
+		-- different things, so each becomes its own button, named and priced like the card is. They
+		-- are offered on the Active Beast, and greyed out when it cannot pay for them.
 		Attack = {
 			Targets = 0,
+
+			OnCard = function(match, viewer, instance)
+				return instance.zone == "Active" and instance.controller == viewer
+			end,
 
 			Variants = function(match, viewer)
 				local variants = {}
@@ -270,7 +275,6 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 					table.insert(variants, {
 						key = index,
 						params = { attack = index },
-						Width = 150,
 
 						label = CardEngine.T(damage > 0
 							and "ce_expansion_beastbound_attack_button"
