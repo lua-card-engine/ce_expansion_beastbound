@@ -104,6 +104,7 @@ return {
 	["ce_expansion_beastbound_no_basic_in_hand"] = "You have no Basic Beast in hand.",
 	["ce_expansion_beastbound_nothing_to_evolve"] = "Nothing in your hand evolves a Beast you have in play.",
 	["ce_expansion_beastbound_nothing_to_retreat_to"] = "You have no Benched Beast to bring out.",
+	["ce_expansion_beastbound_action_retreat"] = "Swap In",
 	["ce_expansion_beastbound_attack_button"] = "{name}  {damage}",
 	["ce_expansion_beastbound_attack_button_no_damage"] = "{name}",
 	["ce_expansion_beastbound_already_played_supporter"] = "You've already played a Supporter this turn.",

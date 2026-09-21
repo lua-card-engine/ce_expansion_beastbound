@@ -248,7 +248,7 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 		PlayBasic = { Targets = 1 },
 		PlayItem = { Targets = 1 },
 		PlaySupporter = { Targets = 1 },
-		Retreat = { Targets = 1 },
+		Retreat = { Targets = 1, Label = "ce_expansion_beastbound_action_retreat" },
 		EndTurn = { Targets = 0 },
 
 		-- "Attack" on its own is not a move anybody can make: a Beast has two of them and they do
