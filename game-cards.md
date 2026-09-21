@@ -13,7 +13,7 @@ Attack costs are a number of Energy **of the Beast's own type** (this set has no
 | # | Name | Stage | Evolves from | HP | Retreat | Attacks |
 |---|---|---|---|---|---|---|
 | 001 | Starkrat | Basic | — | 65 | 1 | **Static Nip** (1, 10 dmg) — Flip a coin. If heads, the Defending Beast is Paralyzed.<br>**Scurry Shock** (2, 30 dmg) |
-| 002 | Thunderat | Stage 1 | Starkrat | 110 | 1 | **Jolt Bite** (1, 30 dmg)<br>**Charged Tackle** (3, 60 dmg) — Does 20 more damage if Thunderat has 2 or more Energy attached. |
+| 002 | Thunderat | Stage 1 | Starkrat | 110 | 1 | **Jolt Bite** (1, 30 dmg)<br>**Charged Tackle** (3, 60 dmg) — Does 20 more damage if Thunderat has 4 or more Energy attached. |
 | 003 | Voltking | Stage 2 | Thunderat | 180 | 2 | **Static Claws** (2, 50 dmg) — Flip a coin. If heads, the Defending Beast is Paralyzed.<br>**Storm Sabre** (3, 130 dmg) — Does 40 more damage if this Beast has no damage counters on it. |
 
 ### Voltkey → Sparkian → Stormilla
