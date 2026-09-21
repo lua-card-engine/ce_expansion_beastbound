@@ -10,6 +10,12 @@ CardEngine.ExpansionSets.Beastbound = CardEngine.ExpansionSets.Beastbound or {}
 
 local Beastbound = CardEngine.ExpansionSets.Beastbound
 
+--- Where the board's art lives
+local MATERIAL_PATH = "card_engine/expansions/ce_expansion_beastbound/"
+
+--- The gold the card backs are trimmed in, which the table's frames and dividing line borrow
+local COLOR_TRIM = Color(158, 132, 83)
+
 --- The colour damage counters are drawn in
 local COLOR_DAMAGE = Color(220, 70, 70)
 local COLOR_DAMAGE_TEXT = Color(255, 235, 235)
@@ -368,10 +374,31 @@ CardEngine.GameRules.RegisterPresentation(Beastbound.EXPANSION_SET_ID, {
 		end,
 	},
 
+	--- The table itself: a blue cloth, every zone framed in gold and named, and the logo on the line
+	--- between the two players. Face-down cards show the same back the printed cards have.
+	Board = {
+		Background = MATERIAL_PATH .. "board_background.jpg",
+		CenterLogo = MATERIAL_PATH .. "board_logo_center.png",
+		CardBack = MATERIAL_PATH .. "board_back.png",
+
+		DividerHeight = 72,
+		DividerThickness = 6,
+
+		ZoneOutline = COLOR_TRIM,
+		ZoneOutlineThickness = 4,
+		ZoneCornerRadius = 12,
+		ZoneLabels = true,
+
+		RowHeights = {
+			Battlefield = 170,
+			Stacks = 110,
+		},
+	},
+
 	--- The six type colours, reused everywhere a type is shown
 	Theme = {
 		Background = Color(22, 26, 30),
-		Divider = Color(70, 90, 80),
+		Divider = COLOR_TRIM,
 		ActiveTurn = Color(120, 210, 130),
 		WaitingTurn = Color(230, 190, 80),
 		Types = Beastbound.TYPE_COLORS,

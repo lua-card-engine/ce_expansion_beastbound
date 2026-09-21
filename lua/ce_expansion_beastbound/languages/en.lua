@@ -72,7 +72,7 @@ return {
 	["ce_expansion_beastbound_zone_hand"] = "Hand",
 	["ce_expansion_beastbound_zone_discard"] = "Discard pile",
 	["ce_expansion_beastbound_zone_prizes"] = "Prize cards",
-	["ce_expansion_beastbound_zone_active"] = "Active spot",
+	["ce_expansion_beastbound_zone_active"] = "Active Beast",
 	["ce_expansion_beastbound_zone_bench"] = "Bench",
 
 	["ce_expansion_beastbound_inspect_hp"] = "Health",
